@@ -16,6 +16,7 @@
 
 <body>
     <header>
+        <!-- navigation bar -->
         <div id="nav">
             <div id="project-details">
                 <div><i class="ri-file-edit-fill"></i></div>
@@ -23,8 +24,56 @@
             </div>
             <id id="export-buttons">
                 <div id="outline-btn"><i class="ri-download-2-line"></i> Export JSON</div>
-                <div id="fill-btn"><i class="ri-code-s-slash-line"></i>Export HTML</div>
+                <div id="fill-btn"><i class="ri-code-s-slash-line"></i> Export HTML</div>
             </id>
+        </div>
+        <aside>
+            <div id="tools">
+                <div><i class="ri-cursor-hand"></i></div>
+                <div><i class="ri-rectangle-line"></i></div>
+                <div><i class="ri-t-box-line"></i></div>
+                <div><i class="ri-file-image-line"></i></div>
+            </div>
+        </aside>
+        <!-- editor -->
+        <div id="editor">
+            <div id="canvas">
+                <div id="page"></div>
+            </div>
+            <aside>
+                <div id="layers-section">
+                    <div id="top">
+                        <h1>LAYERS</h1>
+                        <p>Canvas Elements</p>
+                        <hr>
+                        <p>Element-1</p>
+                        <p>Element-1</p>
+                        <p>Element-1</p>
+                    </div>
+                    <div id="bottom">
+                        <button id="up"><i class="ri-arrow-up-long-fill"></i></button>
+                        <button id="down"><i class="ri-arrow-down-long-line"></i></button>
+                    </div>
+                </div>
+                <id id="properties-section">
+                    <div id="top">PROPERTIES</div>
+                    <p>Selection: <span>Element Name</span></p>
+                    <hr>
+                    <p>LAYOUT</p>
+                    <div id="box">
+                        <p>W</p>
+                        <div id="box-w">348px</div>
+                        <p>H</p>
+                        <div id="box-h">348px</div>
+                        <p>X</p>
+                        <div id="box-x">348px</div>
+                        <p>Y</p>
+                        <div id="box-y">348px</div>
+                    </div>
+                    <div id="rotaion"><i class="ri-rotate-lock-line"></i> Rotate <span>0 Deg</span></div>
+                    <div id="button"><i class="ri-checkbox-circle-line"></i> Update Element</div>
+                </id>
+            </aside>
         </div>
     </header>
     <script src="./script.js"></script>
