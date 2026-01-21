@@ -191,3 +191,7 @@ header #nav {
     margin-top: 10px;
     border-radius: 10px;
 }
+
+#page{
+    position: relative;
+}
