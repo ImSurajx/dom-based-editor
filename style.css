@@ -11,7 +11,7 @@ body {
     width: 100%;
     background: whitesmoke;
 }
-
+/* canvas section: contain background layout grid layout, most of things goona happen in this part */
 #work-space {
     height: 100vh;
     width: 100vw;
@@ -29,11 +29,13 @@ body {
     background-size: 50px 50px;
 }
 
+/* top navigation bar: logo of web page, file name, setting upload or export buttons are here. */
 #nav {
     display: flex;
     justify-content: space-between;
     position: absolute;
     width: 100%;
+    height: 80px;
     top: 0;
     padding: 10px;
 }
@@ -48,6 +50,7 @@ body {
     padding: 10px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
 }
 
 #nav #left i {
@@ -64,10 +67,11 @@ body {
     background: #fff;
     padding: 10px;
     border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 #nav #right #pro-pic {
-    width: 50px;
+    width: 40px;
     margin-top: 5px;
 }
 
@@ -88,20 +92,46 @@ body {
 
 #nav #right #buttons button {
     border: none;
-    padding: 12px 30px;
+    padding: 8px 20px;
     border-radius: 5px;
     font-size: 14px;
     background: royalblue;
     color: #fff;
     border: 1px solid #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
 }
 
 #nav #right #buttons .grey {
     border: none;
-    padding: 12px 30px;
+    padding: 8px 20px;
     border-radius: 5px;
     font-size: 14px;
     background: whitesmoke;
     color: #000;
     border: 1px solid gray;
+}
+
+#nav #right #buttons button i{
+    font-size: 20px;
+}
+
+/* left tool panel: contain most of tools which we are goint to use here */
+#tools{
+    position: absolute;
+    top: 20%;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: fit-content;
+    background: #fff;
+    font-size: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
 }
