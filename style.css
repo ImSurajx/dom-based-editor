@@ -18,7 +18,7 @@ body {
     background: whitesmoke;
     position: relative;
     background-image:
-        /* new concept: use gradient like a grid, break grid into solid color lines */
+        /* new concept: use gradient like a grid, break gradient into solid color of lines */
         /* to right → paint left to right */
         /* color 1px → draw 1px grid line */
         /* transparent → stop color immediately (no fade) */
@@ -27,4 +27,81 @@ body {
         linear-gradient(to bottom, #e5e5e5 1px, transparent 1px);
     ;
     background-size: 50px 50px;
+}
+
+#nav {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    padding: 10px;
+}
+
+#nav #left {
+    display: flex;
+    width: fit-content;
+    justify-content: left;
+    align-items: center;
+    gap: 10px;
+    background: #fff;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#nav #left i {
+    font-size: 20px;
+    margin: 5px;
+}
+
+#nav #right {
+    display: flex;
+    width: fit-content;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    background: #fff;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+#nav #right #pro-pic {
+    width: 50px;
+    margin-top: 5px;
+}
+
+#nav #right #pro-pic img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    object-position: center;
+    border-radius: 50%;
+}
+
+#nav #right #buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+#nav #right #buttons button {
+    border: none;
+    padding: 12px 30px;
+    border-radius: 5px;
+    font-size: 14px;
+    background: royalblue;
+    color: #fff;
+    border: 1px solid #000;
+}
+
+#nav #right #buttons .grey {
+    border: none;
+    padding: 12px 30px;
+    border-radius: 5px;
+    font-size: 14px;
+    background: whitesmoke;
+    color: #000;
+    border: 1px solid gray;
 }
