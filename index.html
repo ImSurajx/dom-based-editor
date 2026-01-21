@@ -16,42 +16,52 @@
 
 <body>
     <!-- work-space: is the canvas where we can create or edit element -->
-    <div id="work-space" class="canvas">
-        <!-- nav or options: this part contain logo & other opetion like export the project  -->
-        <div id="nav" class="options">
-            <div id="left">
-                <p>DOM Editor</p>
-                <hr>
-                <p><i class="ri-file-line"></i> Untitled</p>
-                <hr>
-                <p><i class="ri-settings-2-line"></i></p>
-                <p><i class="ri-upload-2-line"></i></p>
-                <i class="ri-search-line"></i>
+    <div id="work-space" class="canvas"></div>
+    <!-- nav or options: this part contain logo & other opetion like export the project  -->
+    <div id="nav" class="options">
+        <div id="left">
+            <p>DOM Editor</p>
+            <hr>
+            <p><i class="ri-file-line"></i> Untitled</p>
+            <hr>
+            <p><i class="ri-settings-2-line"></i></p>
+            <p><i class="ri-upload-2-line"></i></p>
+            <i class="ri-search-line"></i>
+        </div>
+        <div id="right">
+            <div id="pro-pic">
+                <img src="https://avatars.githubusercontent.com/u/106401203?v=4" alt="">
             </div>
-            <div id="right">
-                <div id="pro-pic">
-                    <img src="https://avatars.githubusercontent.com/u/106401203?v=4" alt="">
-                </div>
-                <div id="buttons">
-                    <button class="grey"><i class="ri-code-s-slash-line"></i> HTML</button>
-                    <button class="grey"><i class="ri-export-line"></i> JSON</button>
-                    <button><i class="ri-share-line"></i> Share</button>
-                </div>
+            <div id="buttons">
+                <button class="grey"><i class="ri-code-s-slash-line"></i> HTML</button>
+                <button class="grey"><i class="ri-export-line"></i> JSON</button>
+                <button><i class="ri-share-line"></i> Share</button>
             </div>
         </div>
-        <!-- tools section: contain most of the tool that required to perform operation on webpage -->
-        <div id="tools">
-            <div><i class="ri-cursor-hand"></i></div>
-            <div><i class="ri-text"></i></div>
-            <div><i class="ri-rectangle-line"></i></div>
-            <div><i class="ri-circle-line"></i></div>
-            <div><i class="ri-shapes-line"></i></div>
-            <div><i class="ri-pencil-line"></i></div>
-            <div><i class="ri-crop-2-line"></i></div>
-            <div><i class="ri-stack-fill"></i></div>
-            <div><i class="ri-arrow-right-up-long-line"></i></div>
-            <div><i class="ri-arrow-go-back-line"></i></div>
-            <div><i class="ri-arrow-go-forward-line"></i></div>
+    </div>
+    <!-- tools section: contain most of the tool that required to perform operation on webpage -->
+    <div id="tools">
+        <div><i class="ri-cursor-hand"></i></div>
+        <div><i class="ri-text"></i></div>
+        <div><i class="ri-rectangle-line"></i></div>
+        <div><i class="ri-circle-line"></i></div>
+        <div><i class="ri-shapes-line"></i></div>
+        <div><i class="ri-pencil-line"></i></div>
+        <div><i class="ri-crop-2-line"></i></div>
+        <div><i class="ri-stack-fill"></i></div>
+        <div><i class="ri-arrow-right-up-long-line"></i></div>
+        <div><i class="ri-arrow-go-back-line"></i></div>
+        <div><i class="ri-arrow-go-forward-line"></i></div>
+    </div>
+    <!-- bottom bar: contain menu icon & zoom options -->
+    <div id="bottom-menu">
+        <div id="btm-left">
+            <i class="ri-book-read-fill"></i>
+        </div>
+        <div id="btm-right">
+            <div id="percentage"> <span id="subtraction">-</span> <span>100%</span><span id="addition">+</span></div>
+            <div id="help"><i class="ri-question-fill"></i></div>
+            <div id="ai"><i class="ri-bard-fill"></i></div>
         </div>
     </div>
     <script src="./script.js"></script>
