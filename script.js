@@ -12,6 +12,9 @@ document.addEventListener('contextmenu', event => event.preventDefault());
 // selecting workspace
 let workSpace = document.getElementById("work-space");
 
+// selecting element
+let selectElement = null;
+
 // varaible that manage states
 let activeTool = document.getElementById("select-tool");
 
@@ -68,7 +71,7 @@ workSpace.addEventListener('mousedown', (e) => {
         rectangle.style.top = `${startY}px`;
         rectangle.style.width = "0px";
         rectangle.style.height = "0px";
-        rectangle.style.border = "1px solid black";
+        rectangle.style.border = "4px solid black";
         workSpace.appendChild(rectangle);
         console.log("rectangle created");
     }
@@ -85,12 +88,18 @@ workSpace.addEventListener('mousemove', (e) => {
     rectangle.style.height = `${currentY - startY}px`
 });
 // stop draging, & element will be created
-workSpace.addEventListener('mouseup', (e)=>{
-    if(isCreating === false) return;
+workSpace.addEventListener('mouseup', (e) => {
+    if (isCreating === false) return;
     else {
         isCreating = false;
     }
-    rectangle = null;
+    // make element selected just after creation
+    if (selectElement !== null) {
+        selectElement.classList.remove('selected');
+        selectElement = null;
+    }
+    selectElement = rectangle;
+    selectElement.classList.add('selected')
 })
 
 

@@ -207,3 +207,7 @@ body {
 .active-tool {
     color: royalblue;
 }
+
+.selected{
+    background-color: royalblue;
+}
