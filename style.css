@@ -10,6 +10,7 @@ body {
     height: 100%;
     width: 100%;
     background: whitesmoke;
+    -webkit-tap-highlight-color: transparent;
 }
 
 /* canvas section: contain background layout grid layout, most of things goona happen in this part */
@@ -29,6 +30,7 @@ body {
     ;
     background-size: 50px 50px;
     cursor: pointer;
+    user-select: none;
 }
 
 /* top navigation bar: logo of web page, file name, setting upload or export buttons are here. */
@@ -202,6 +204,6 @@ body {
     font-size: 20px;
 }
 
-.active-tool{
+.active-tool {
     color: royalblue;
 }
