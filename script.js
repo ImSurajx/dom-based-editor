@@ -47,7 +47,7 @@ pencilTool.addEventListener('click', () => {
 });
 
 // creating a dynamic element
-let startX = 0, startY = 0, isCreating = false;
+let startX = 0, startY = 0, isCreating = false, created = false;
 let currentX = 0, currentY = 0;
 let rectangle = null;
 workSpace.addEventListener('mousedown', (e) => {
@@ -99,7 +99,28 @@ workSpace.addEventListener('mouseup', (e) => {
         selectElement = null;
     }
     selectElement = rectangle;
-    selectElement.classList.add('selected')
+    selectElement.classList.add('selected');
+    created = true;
 })
 
-
+// selecting element after creation
+workSpace.addEventListener('click', (e) => {
+    // fix element not auto selecting issue just after creation
+    if(created === true) {
+        created = false;
+        return;
+    }
+    if (isCreating === true) return;
+    if (e.target !== workSpace) {
+        if (selectElement != null) {
+            selectElement.classList.remove('selected');
+            selectElement = e.target;
+            selectElement.classList.add('selected');
+        }
+    } else {
+        if (selectElement !== null) {
+            selectElement.classList.remove('selected');
+            selectElement = null;
+        }
+    }
+});
