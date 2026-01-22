@@ -28,6 +28,7 @@ body {
         linear-gradient(to bottom, #e5e5e5 1px, transparent 1px);
     ;
     background-size: 50px 50px;
+    cursor: pointer;
 }
 
 /* top navigation bar: logo of web page, file name, setting upload or export buttons are here. */
@@ -199,4 +200,8 @@ body {
 #bottom-menu #btm-right #ai {
     margin-right: 15px;
     font-size: 20px;
+}
+
+.active-tool{
+    color: royalblue;
 }
