@@ -47,7 +47,7 @@ pencilTool.addEventListener('click', () => {
 });
 
 // creating a dynamic element
-let startX = 0, startY = 0, isCreating = false, created = false;
+let startX = 0, startY = 0, isCreating = false;
 let currentX = 0, currentY = 0;
 let rectangle = null;
 workSpace.addEventListener('mousedown', (e) => {
@@ -55,14 +55,11 @@ workSpace.addEventListener('mousedown', (e) => {
     if (activeTool !== selectTool) {
         isCreating = true;
     } else {
-        console.log(isCreating);
         isCreating = false;
     }
+    const rect = workSpace.getBoundingClientRect();
     startX = e.offsetX; // calculate initial position of element in x plane
     startY = e.offsetY; // calculate initial position of element in y plane
-    console.log(startX);
-    console.log(startY);
-    console.log(activeTool);
     // creating a rectangle when tool is active
     if (isCreating === true) {
         rectangle = document.createElement('div');
@@ -73,14 +70,10 @@ workSpace.addEventListener('mousedown', (e) => {
         rectangle.style.height = "0px";
         rectangle.style.border = "4px solid black";
         workSpace.appendChild(rectangle);
-        console.log("rectangle created");
     }
-    console.log(rectangle);
-    console.log(activeTool === selectTool);
 });
 // draging create element
 workSpace.addEventListener('mousemove', (e) => {
-    console.log("mousemove");
     if (isCreating === false || rectangle === null) return;
     currentX = e.offsetX;
     currentY = e.offsetY;
@@ -100,17 +93,16 @@ workSpace.addEventListener('mouseup', (e) => {
     }
     selectElement = rectangle;
     selectElement.classList.add('selected');
-    created = true;
+    isCreating = true;
 })
 
 // selecting element after creation
 workSpace.addEventListener('click', (e) => {
     // fix element not auto selecting issue just after creation
-    if(created === true) {
-        created = false;
+    if (isCreating === true) {
+        isCreating = false;
         return;
     }
-    if (isCreating === true) return;
     if (e.target !== workSpace) {
         if (selectElement != null) {
             selectElement.classList.remove('selected');
