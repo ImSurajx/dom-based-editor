@@ -84,15 +84,28 @@ workSpace.addEventListener('mousedown', (e) => {
     startY = e.clientY - rect.top; // calculate initial position of element in y plane
     // creating a rectangle when tool is active
     if (isCreating === true) {
-        rectangle = document.createElement('div');
-        rectangle.style.position = "absolute";
-        rectangle.style.left = `${startX}px`;
-        rectangle.style.top = `${startY}px`;
-        rectangle.style.width = "0px";
-        rectangle.style.height = "0px";
-        rectangle.style.border = "4px solid black";
-        rectangle.classList.add('rectangle');
-        workSpace.appendChild(rectangle);
+        if (activeTool === rectangleTool) {
+            rectangle = document.createElement('div');
+            rectangle.style.position = "absolute";
+            rectangle.style.left = `${startX}px`;
+            rectangle.style.top = `${startY}px`;
+            rectangle.style.width = "0px";
+            rectangle.style.height = "0px";
+            rectangle.style.border = "4px solid black";
+            rectangle.classList.add('rectangle');
+            workSpace.appendChild(rectangle);
+        }
+        if (activeTool === circleTool) {
+            rectangle = document.createElement('div');
+            rectangle.style.position = "absolute";
+            rectangle.style.left = `${startX}px`;
+            rectangle.style.top = `${startY}px`;
+            rectangle.style.width = "0px";
+            rectangle.style.height = "0px";
+            rectangle.style.border = "4px solid black";
+            rectangle.classList.add('circle');
+            workSpace.appendChild(rectangle);
+        }
     }
 });
 // drag to create element
