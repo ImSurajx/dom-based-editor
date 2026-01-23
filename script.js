@@ -4,6 +4,7 @@ let textTool = document.getElementById("text-tool");
 let rectangleTool = document.getElementById("rectangle-tool");
 let circleTool = document.getElementById("circle-tool");
 let pencilTool = document.getElementById("pencil-tool");
+let rotationTool = document.getElementById("rotate-btn");
 
 // prevent deafult behaviour
 document.addEventListener('contextmenu', event => event.preventDefault());
@@ -93,6 +94,7 @@ workSpace.addEventListener('mousedown', (e) => {
             rectangle.style.height = "0px";
             rectangle.style.border = "4px solid black";
             rectangle.classList.add('rectangle');
+            rectangle.setAttribute('rotation', 0);
             workSpace.appendChild(rectangle);
         }
         if (activeTool === circleTool) {
@@ -104,6 +106,7 @@ workSpace.addEventListener('mousedown', (e) => {
             rectangle.style.height = "0px";
             rectangle.style.border = "4px solid black";
             rectangle.classList.add('circle');
+            rectangle.setAttribute('rotation', 0);
             workSpace.appendChild(rectangle);
         }
     }
@@ -257,4 +260,18 @@ shareBtn.addEventListener('click', (e) => {
     setTimeout(() => {
         label.innerText = "Share";
     }, 3000)
+});
+
+// rotation element on click of rotate icon by 30 Degree
+rotationTool.addEventListener('click', () => {
+    if (!selectElement) return; // if selectElement is empty return;
+    let rotationData = +(selectElement.getAttribute('rotation')) + 15;
+    selectElement.style.transform = `rotate(${rotationData}deg)`;
+    selectElement.setAttribute('rotation', rotationData);
+    // click feedback
+    rotationTool.style.color = "royalblue";
+
+    setTimeout(() => {
+        rotationTool.style.color = "";
+    }, 200);
 });
