@@ -47,7 +47,7 @@ pencilTool.addEventListener('click', () => {
 });
 
 // creating a dynamic element
-let startX = 0, startY = 0, isCreating = false;
+let startX = 0, startY = 0, isCreating = false, justCreated = false;
 let currentX = 0, currentY = 0;
 let rectangle = null;
 workSpace.addEventListener('mousedown', (e) => {
@@ -58,8 +58,9 @@ workSpace.addEventListener('mousedown', (e) => {
         isCreating = false;
     }
     const rect = workSpace.getBoundingClientRect();
-    startX = e.offsetX; // calculate initial position of element in x plane
-    startY = e.offsetY; // calculate initial position of element in y plane
+
+    startX = e.clientX - rect.left; // calculate initial position of element in x plane
+    startY = e.clientY - rect.top; // calculate initial position of element in y plane
     // creating a rectangle when tool is active
     if (isCreating === true) {
         rectangle = document.createElement('div');
@@ -72,11 +73,12 @@ workSpace.addEventListener('mousedown', (e) => {
         workSpace.appendChild(rectangle);
     }
 });
-// draging create element
+// drag to create element
 workSpace.addEventListener('mousemove', (e) => {
     if (isCreating === false || rectangle === null) return;
-    currentX = e.offsetX;
-    currentY = e.offsetY;
+    const rect = workSpace.getBoundingClientRect();
+    currentX = e.clientX - rect.left;
+    currentY = e.clientY - rect.top;
     rectangle.style.width = `${currentX - startX}px`
     rectangle.style.height = `${currentY - startY}px`
 });
@@ -93,14 +95,15 @@ workSpace.addEventListener('mouseup', (e) => {
     }
     selectElement = rectangle;
     selectElement.classList.add('selected');
-    isCreating = true;
+    justCreated = true;
+    rectangle = null;
 })
 
 // selecting element after creation
 workSpace.addEventListener('click', (e) => {
     // fix element not auto selecting issue just after creation
-    if (isCreating === true) {
-        isCreating = false;
+    if (justCreated === true) {
+        justCreated = false;
         return;
     }
     if (e.target !== workSpace) {
