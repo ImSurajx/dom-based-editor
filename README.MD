@@ -1,55 +1,68 @@
-## 🧩 DOM-Based Visual Editor (Figma-Style)
+# Mini Web Editor (Vanilla JS)
 
-This project is a browser-based visual editor inspired by tools like Figma.  
-It allows users to create, select, move, and manage simple UI elements directly on a canvas using mouse interactions.  
-The editor is built using pure HTML, CSS, and JavaScript (DOM-based), focusing on core editor mechanics.
-
----
-
-## ✅ What’s Working
-
-- Create rectangles using click + drag
-- Select elements by clicking on them
-- Move selected elements using mouse drag (Select tool)
-- Delete selected elements using Delete / Backspace key
-- Export canvas data as JSON
-- Export canvas as basic HTML
-- Share button to copy current page URL
-- Grid-based canvas background
-- Tool-based interaction (Select, Rectangle, etc.)
+This project is a simple browser-based design editor built using **HTML, CSS, and Vanilla JavaScript**.  
+It allows users to create and manipulate basic shapes inside a workspace, similar to a very lightweight design tool.
 
 ---
 
-## ❌ What’s Not Implemented (Yet)
+## ✨ Features Implemented
 
-- Resize handles
-- Undo / Redo
-- Text editing
-- Advanced styling controls
-- Import JSON
-- Multi-select support
+- Rectangle tool  
+- Circle tool (same logic as rectangle with border-radius)  
+- Select & move elements using mouse drag  
+- Delete selected element using `Delete` / `Backspace` key  
+- Rotate selected element by fixed angle (15° per click)  
+- Export design as:
+  - JSON file (editor data)
+  - HTML file (static output)
+- Share button (copies current page URL to clipboard)
+- Visual feedback for active tools and actions
 
 ---
 
 ## 🧭 How to Use
 
-1. Select a tool from the toolbar  
-2. Use Rectangle tool → click and drag on canvas  
-3. Use Select tool → click to select, drag to move  
-4. Press Delete / Backspace to remove selected element  
-5. Use Export buttons for JSON or HTML output  
-6. Use Share button to copy page URL  
+1. Select a tool from the toolbar (Rectangle / Circle).
+2. Click and drag inside the workspace to draw.
+3. Switch to **Select Tool** to:
+   - Click an element to select it
+   - Drag to move it
+4. Use:
+   - **Delete key** to remove selected element
+   - **Rotate button** to rotate selected element
+5. Export your work using:
+   - **Export JSON** → editor data
+   - **Export HTML** → static layout
 
 ---
 
-## 🛠️ How to Run
+## ⚠️ Known Limitations
 
-- Open `index.html` in a modern browser  
-- No setup or dependencies required  
+- Resize feature is not implemented
+- Rotation is step-based (not free rotation)
+- No undo / redo
+- Styles are inline (not optimized for production)
+
+These were intentionally skipped due to submission time constraints.
 
 ---
 
-## 📌 Note
+## 🤖 AI Usage Disclosure
 
-This is a minimum viable product (MVP) focused on editor logic and DOM interaction.  
-The project can be extended with resize, undo/redo, and advanced editing features.
+AI assistance (ChatGPT) was used **only for guidance, debugging help, and logic clarification**.  
+All implementation, structure, and final decisions were made and written manually.
+
+---
+
+## 🕒 Updates
+
+The project may receive further improvements until **11:59 PM**.  
+For additional features or fixes, please check the **Git commit history**.
+
+---
+
+## 📌 Tech Stack
+
+- HTML
+- CSS
+- JavaScript (Vanilla)

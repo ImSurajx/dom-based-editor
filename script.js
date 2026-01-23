@@ -156,21 +156,24 @@ workSpace.addEventListener('mouseup', (e) => {
 // selecting element after creation
 workSpace.addEventListener('click', (e) => {
     // fix element not auto selecting issue just after creation
-    if (justCreated === true) {
+    if (justCreated) {
         justCreated = false;
         return;
     }
-    if (e.target !== workSpace) {
-        if (selectElement != null) {
+    // Clicked on empty space
+    if (e.target === workSpace) {
+        if (selectElement) {
             selectElement.classList.remove('selected');
-            selectElement = e.target;
-            selectElement.classList.add('selected');
+            selectElement = null;
         }
-    } else {
-        if (selectElement !== null) {
-            selectElement.classList.remove('selected');
-        }
+        return;
     }
+    // Clicked on an element
+    if (selectElement) {
+        selectElement.classList.remove('selected');
+    }
+    selectElement = e.target;
+    selectElement.classList.add('selected');
 });
 
 //  remove element on pressing delete key
@@ -179,6 +182,11 @@ document.addEventListener('keydown', (e) => {
         if (selectElement) {
             selectElement.remove();
             selectElement = null;
+            isCreating = false;
+            justCreated = false;
+            isMoving = false;
+            activeTool = selectTool;
+            rectangle = null;
         } else {
             return;
         }
