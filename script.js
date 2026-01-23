@@ -50,7 +50,33 @@ pencilTool.addEventListener('click', () => {
 let startX = 0, startY = 0, isCreating = false, justCreated = false;
 let currentX = 0, currentY = 0;
 let rectangle = null;
+// movement variables
+let isMoving = false;
+let mouseStartX = 0;
+let mouseStartY = 0;
+let elementStartX = 0;
+let elementStartY = 0;
+let dx = 0, dy = 0; // calculate cursor movement
+
 workSpace.addEventListener('mousedown', (e) => {
+    if (activeTool === selectTool && selectElement && selectElement === e.target) {
+        isMoving = true;
+        let rect = workSpace.getBoundingClientRect();
+
+        // calculate mouse start postition
+        mouseStartX = e.clientX - rect.left;
+        mouseStartY = e.clientY - rect.top;
+
+        // element start position
+        elementStartX = +(selectElement.style.left.replace("px", ""));
+        elementStartY = +(selectElement.style.top.replace("px", ""));
+
+        // debug movement logs;
+        console.log("MOVE START");
+        console.log("mouse:", mouseStartX, mouseStartY);
+        console.log("element:", elementStartX, elementStartY);
+        return;
+    }
     // decide: we are creating a element or selecting
     if (activeTool !== selectTool) {
         isCreating = true;
@@ -75,6 +101,18 @@ workSpace.addEventListener('mousedown', (e) => {
 });
 // drag to create element
 workSpace.addEventListener('mousemove', (e) => {
+    if (isMoving) {
+        let rect = workSpace.getBoundingClientRect();
+        let currentMouseX = e.clientX - rect.left;
+        let currentMouseY = e.clientY - rect.top;
+
+        dx = currentMouseX - mouseStartX;
+        dy = currentMouseY - mouseStartY;
+        console.log("dx, dy: ", dx, dy);
+
+        selectElement.style.left = `${elementStartX + dx}px`;
+        selectElement.style.top = `${elementStartY + dy}px`;
+    }
     if (isCreating === false || rectangle === null) return;
     const rect = workSpace.getBoundingClientRect();
     currentX = e.clientX - rect.left;
@@ -84,6 +122,11 @@ workSpace.addEventListener('mousemove', (e) => {
 });
 // stop draging, & element will be created
 workSpace.addEventListener('mouseup', (e) => {
+    // stop moving
+    if (isMoving) {
+    isMoving = false;
+    return;
+    }
     if (isCreating === false) return;
     else {
         isCreating = false;
@@ -115,7 +158,6 @@ workSpace.addEventListener('click', (e) => {
     } else {
         if (selectElement !== null) {
             selectElement.classList.remove('selected');
-            selectElement = null;
         }
     }
 });
