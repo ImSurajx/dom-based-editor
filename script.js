@@ -124,8 +124,8 @@ workSpace.addEventListener('mousemove', (e) => {
 workSpace.addEventListener('mouseup', (e) => {
     // stop moving
     if (isMoving) {
-    isMoving = false;
-    return;
+        isMoving = false;
+        return;
     }
     if (isCreating === false) return;
     else {
@@ -161,3 +161,15 @@ workSpace.addEventListener('click', (e) => {
         }
     }
 });
+
+//  remove element on pressing delete key
+document.addEventListener('keydown', (e) => {
+    if (e.key == 'Backspace' || e.key == 'Delete') {
+        if (selectElement) {
+            selectElement.remove();
+            selectElement = null;
+        } else {
+            return;
+        }
+    }
+})
