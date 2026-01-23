@@ -234,3 +234,14 @@ exportHTML.addEventListener('click', (el) => {
     URL.revokeObjectURL(url);
 })
 
+// share button -> copy to clipboard
+shareBtn = document.getElementById('share-btn');
+const label = document.querySelector('.label');
+shareBtn.addEventListener('click', (e) => {
+    const url = window.location.href; // get url from window
+    navigator.clipboard.writeText(url);
+    label.innerText = "Copied";
+    setTimeout(() => {
+        label.innerText = "Share";
+    }, 3000)
+});
