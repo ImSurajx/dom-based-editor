@@ -70,11 +70,6 @@ workSpace.addEventListener('mousedown', (e) => {
         // element start position
         elementStartX = +(selectElement.style.left.replace("px", ""));
         elementStartY = +(selectElement.style.top.replace("px", ""));
-
-        // debug movement logs;
-        console.log("MOVE START");
-        console.log("mouse:", mouseStartX, mouseStartY);
-        console.log("element:", elementStartX, elementStartY);
         return;
     }
     // decide: we are creating a element or selecting
@@ -96,6 +91,7 @@ workSpace.addEventListener('mousedown', (e) => {
         rectangle.style.width = "0px";
         rectangle.style.height = "0px";
         rectangle.style.border = "4px solid black";
+        rectangle.classList.add('rectangle');
         workSpace.appendChild(rectangle);
     }
 });
@@ -108,7 +104,6 @@ workSpace.addEventListener('mousemove', (e) => {
 
         dx = currentMouseX - mouseStartX;
         dy = currentMouseY - mouseStartY;
-        console.log("dx, dy: ", dx, dy);
 
         selectElement.style.left = `${elementStartX + dx}px`;
         selectElement.style.top = `${elementStartY + dy}px`;
@@ -172,4 +167,36 @@ document.addEventListener('keydown', (e) => {
             return;
         }
     }
-})
+});
+
+//  export json
+let exportJSON = document.getElementById('export-json');
+exportJSON.addEventListener('click', (e) => {
+    let allChildren = [...workSpace.children];
+    let elements = [];
+    let i = 0;
+    allChildren.forEach((el) => {
+        console.log(el.style);
+        elements[i] = {
+            elementType: `${el.className.replace(" selected", "")}`,
+            height: `${el.style.height}`,
+            width: `${el.style.width}`,
+            top: `${el.style.top}`,
+            left: `${el.style.left}`,
+        }
+        i++;
+    })
+    // convert JS object to JSON string (used json template that present on the internet)
+    const jsonData = JSON.stringify(elements, null, 2);
+    // create a file-like object
+    const blob = new Blob([jsonData], { type: "application/json" });
+    // create a temporary download link
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "design.json";
+    // trigger download
+    a.click();
+    // cleanup
+    URL.revokeObjectURL(url);
+});
