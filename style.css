@@ -101,7 +101,6 @@ body {
     font-size: 14px;
     background: royalblue;
     color: #fff;
-    border: 1px solid #000;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -116,12 +115,19 @@ body {
     font-size: 14px;
     background: whitesmoke;
     color: #000;
-    border: 1px solid gray;
 }
 
 #nav #right #buttons button i {
     font-size: 20px;
 }
+
+#nav #right #buttons .grey:hover {
+    background: royalblue;
+    border-color: #000;
+    color: #fff;
+    cursor: pointer;
+}
+
 
 /* left tool panel: contain most of tools which we are goint to use here */
 #tools {
@@ -208,6 +214,6 @@ body {
     color: royalblue;
 }
 
-.selected{
+.selected {
     background-color: royalblue;
 }

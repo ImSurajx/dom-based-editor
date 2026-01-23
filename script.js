@@ -200,3 +200,37 @@ exportJSON.addEventListener('click', (e) => {
     // cleanup
     URL.revokeObjectURL(url);
 });
+
+// export html
+let exportHTML = document.getElementById('export-html');
+exportHTML.addEventListener('click', (el) => {
+    let allChildren = [...workSpace.children];
+    let htmlContent = "";
+    allChildren.map((el) => {
+        htmlContent += `${el.outerHTML}\n`;
+    })
+    let html = `
+     <!DOCTYPE html>
+        <html lang="en">
+            <head>
+                <style> body {position: relative;}</style>
+            </head>
+            <body>
+                ${htmlContent}
+            </body>
+        </html>
+    `;
+    // create a file-like object
+    const blob = new Blob([html], { type: "text/html" });
+    // create a temporary download link
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "index.html";
+    // trigger download
+    document.body.appendChild(a);
+    a.click();
+    // cleanup
+    URL.revokeObjectURL(url);
+})
+
