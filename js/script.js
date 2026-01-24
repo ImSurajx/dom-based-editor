@@ -255,6 +255,7 @@ workSpace.addEventListener('mouseup', (e) => {
     if (isResizing) {
         isResizing = false;
         resizeDirection = null;
+        saveToLocalStorage();
         return;
     }
 
