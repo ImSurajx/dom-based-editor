@@ -109,6 +109,7 @@ workSpace.addEventListener('mousedown', (e) => {
             rectangle.classList.add('rectangle');
             rectangle.setAttribute('rotation', 0);
             workSpace.appendChild(rectangle);
+            setActiveTool(selectTool);
         }
 
         // circle creation
@@ -124,6 +125,7 @@ workSpace.addEventListener('mousedown', (e) => {
             rectangle.classList.add('circle');
             rectangle.setAttribute('rotation', 0);
             workSpace.appendChild(rectangle);
+            setActiveTool(selectTool);
         }
 
         // text box creation
@@ -217,6 +219,7 @@ workSpace.addEventListener('mouseup', (e) => {
     justCreated = true;
     rectangle = null;
     updateCursor();
+    setActiveTool(selectTool);
 });
 
 // handle element selection
