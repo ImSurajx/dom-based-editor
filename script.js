@@ -156,6 +156,7 @@ workSpace.addEventListener('mousemove', (e) => {
 
         selectElement.style.left = `${elementStartX + dx}px`;
         selectElement.style.top = `${elementStartY + dy}px`;
+        saveToLocalStorage();
     }
     if (isCreating === false || rectangle === null) return;
     const rect = workSpace.getBoundingClientRect();
@@ -174,6 +175,7 @@ workSpace.addEventListener('mouseup', (e) => {
     if (isCreating === false) return;
     else {
         isCreating = false;
+        saveToLocalStorage();
     }
     // make element selected just after creation
     if (selectElement !== null) {
@@ -221,6 +223,7 @@ document.addEventListener('keydown', (e) => {
             isMoving = false;
             activeTool = selectTool;
             rectangle = null;
+            saveToLocalStorage();
         } else {
             return;
         }
@@ -310,6 +313,7 @@ rotationTool.addEventListener('click', () => {
     let rotationData = +(selectElement.getAttribute('rotation')) + 15;
     selectElement.style.transform = `rotate(${rotationData}deg)`;
     selectElement.setAttribute('rotation', rotationData);
+    saveToLocalStorage();
     // click feedback
     rotationTool.style.color = "royalblue";
 
@@ -326,17 +330,72 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowUp') {
         const top = (+(selectElement.style.top.replace("px", "")) - 5);
         selectElement.style.top = `${top}px`;
+        saveToLocalStorage();
     }
     if (e.key === 'ArrowDown') {
         const top = (+(selectElement.style.top.replace("px", "")) + 5);
         selectElement.style.top = `${top}px`;
+        saveToLocalStorage();
     }
     if (e.key === 'ArrowLeft') {
         const left = (+(selectElement.style.left.replace("px", "")) - 5);
         selectElement.style.left = `${left}px`;
+        saveToLocalStorage();
     }
     if (e.key === 'ArrowRight') {
         const left = (+(selectElement.style.left.replace("px", "")) + 5);
         selectElement.style.left = `${left}px`;
+        saveToLocalStorage();
     }
 })
+
+// localStorage: save to local storage
+function saveToLocalStorage() {
+    // extract all the children from workspace
+    let allChildren = [...workSpace.children];
+    let elements = [];
+    let i = 0;
+    allChildren.forEach((el) => {
+        elements[i] = {
+            elementType: `${el.className.replace(" selected", "")}`,
+            height: `${el.style.height}`,
+            width: `${el.style.width}`,
+            top: `${el.style.top}`,
+            left: `${el.style.left}`,
+            rotation: `${el.getAttribute('rotation')}`,
+            text: `${el.innerText}`,
+        }
+        i++;
+    })
+    // convert JS object to JSON string (used json template that present on the internet)
+    const jsonData = JSON.stringify(elements, null, 2);
+    // create a file-like object
+    localStorage.setItem("editorData", jsonData);
+}
+
+// localStorage: reload from local storage
+function loadFromLocalStorage() {
+    const data = localStorage.getItem("editorData");
+    if (!data) return;
+    const elements = JSON.parse(data);
+    elements.forEach((el) => {
+        let eli = document.createElement('div');
+        el.elementType.split(" ").forEach((cls) => {
+            eli.classList.add(cls);
+        });
+        eli.style.position = "absolute";
+        eli.style.height = (el.height);
+        eli.style.width = (el.width);
+        eli.style.top = el.top;
+        eli.style.left = (el.left);
+        eli.setAttribute("rotation", el.rotation);
+        eli.style.transform = `rotate(${el.rotation}deg)`;
+        eli.style.border = "4px solid black";
+        if (el.elementType == "text-box") {
+            eli.contentEditable = true;
+            eli.innerText = el.text;
+        }
+        workSpace.appendChild(eli);
+    });
+}
+loadFromLocalStorage();
