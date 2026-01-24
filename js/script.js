@@ -7,6 +7,15 @@ let pencilTool = document.getElementById("pencil-tool");
 let rotationTool = document.getElementById("rotate-btn");
 let saveBtn = document.getElementById("save-btn");
 let deleteBtn = document.getElementById("delete-btn");
+let isResizing = false;
+let resizeDirection = null; // "tl", "tr", "bl", "br"
+let resizeStartX = 0;
+let resizeStartY = 0;
+let startWidth = 0;
+let startHeight = 0;
+let startLeft = 0;
+let startTop = 0;
+
 
 // prevent default right click menu on whole document
 document.addEventListener('contextmenu', event => event.preventDefault());
@@ -63,8 +72,23 @@ let isEditingText = false;
 
 // handle mouse down on workspace
 workSpace.addEventListener('mousedown', (e) => {
+    // return if no handler present
+    if (e.target.classList.contains('handler')) {
+        isResizing = true;
+        resizeDirection = e.target.dataset.dir;
+        let rect = workSpace.getBoundingClientRect();
+        resizeStartX = e.clientX - rect.left;
+        resizeStartY = e.clientY - rect.top;
+        startWidth = +(selectElement.style.width.replace("px", ""));
+        startHeight = +(selectElement.style.height.replace("px", ""));
+        startLeft = +(selectElement.style.left.replace("px", ""));
+        startTop = +(selectElement.style.top.replace("px", ""));
+        e.stopPropagation();
+        return;
+    }
+
     // only newly created element get the handler or selected on
-    if (selectElement) {
+    if (activeTool !== selectTool && selectElement) {
         selectElement.classList.remove('selected');
         selectElement.querySelectorAll('.handler').forEach(h => h.remove());
         selectElement = null;
@@ -174,6 +198,31 @@ workSpace.addEventListener('mousedown', (e) => {
 
 // mouse move handler for dragging and resizing
 workSpace.addEventListener('mousemove', (e) => {
+    if (isResizing) {
+        let rect = workSpace.getBoundingClientRect();
+        let currentResizeX = e.clientX - rect.left;
+        let currentResizeY = e.clientY - rect.top;
+        dx = currentResizeX - resizeStartX;
+        dy = currentResizeY - resizeStartY;
+        if (resizeDirection === "br") {
+            selectElement.style.width = `${startWidth + dx}px`;
+            selectElement.style.height = `${startHeight + dy}px`;
+        } else if (resizeDirection === "tl") {
+            selectElement.style.width = `${startWidth - dx}px`;
+            selectElement.style.height = `${startHeight - dy}px`;
+            selectElement.style.top = `${startTop + dy}px`;
+            selectElement.style.left = `${startLeft + dx}px`;
+        } else if (resizeDirection === "tr") {
+            selectElement.style.width = `${startWidth + dx}px`;
+            selectElement.style.height = `${startHeight - dy}px`;
+            selectElement.style.top = `${startTop + dy}px`;
+        } else if (resizeDirection === "bl") {
+            selectElement.style.width = `${startWidth - dx}px`;
+            selectElement.style.height = `${startHeight + dy}px`;
+            selectElement.style.left = `${startLeft + dx}px`;
+        }
+
+    }
 
     // move selected element
     if (isMoving) {
@@ -202,6 +251,12 @@ workSpace.addEventListener('mousemove', (e) => {
 
 // mouse up handler to finalize creation or movement
 workSpace.addEventListener('mouseup', (e) => {
+    // stop resizing element
+    if (isResizing) {
+        isResizing = false;
+        resizeDirection = null;
+        return;
+    }
 
     // stop moving element
     if (isMoving) {
@@ -492,3 +547,5 @@ function addResizeHandlers() {
     bottomRight.dataset.dir = "br";
     selectElement.appendChild(bottomRight);
 }
+
+
