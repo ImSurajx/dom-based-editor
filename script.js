@@ -141,6 +141,9 @@ workSpace.addEventListener('mousedown', (e) => {
             rectangle.addEventListener('blur', () => {
                 isEditingText = false;
             })
+            rectangle.addEventListener("input", () => {
+                saveToLocalStorage();
+            });
         }
     }
 });
@@ -356,14 +359,17 @@ function saveToLocalStorage() {
     let elements = [];
     let i = 0;
     allChildren.forEach((el) => {
+        let type = "rectangle";
+        if (el.classList.contains("text-box")) type = "text-box";
+        else if (el.classList.contains("circle")) type = "circle";
         elements[i] = {
-            elementType: `${el.className.replace(" selected", "")}`,
+            elementType: type,
             height: `${el.style.height}`,
             width: `${el.style.width}`,
             top: `${el.style.top}`,
             left: `${el.style.left}`,
             rotation: `${el.getAttribute('rotation')}`,
-            text: `${el.innerText}`,
+            text: el.classList.contains("text-box") ? el.textContent : "",
         }
         i++;
     })
@@ -376,7 +382,9 @@ function saveToLocalStorage() {
 // localStorage: reload from local storage
 function loadFromLocalStorage() {
     const data = localStorage.getItem("editorData");
-    if (!data) return;
+    if (!data) {
+        return;
+    }
     const elements = JSON.parse(data);
     elements.forEach((el) => {
         let eli = document.createElement('div');
@@ -391,9 +399,18 @@ function loadFromLocalStorage() {
         eli.setAttribute("rotation", el.rotation);
         eli.style.transform = `rotate(${el.rotation}deg)`;
         eli.style.border = "4px solid black";
-        if (el.elementType == "text-box") {
+        if (el.elementType.includes("text-box")) {
             eli.contentEditable = true;
-            eli.innerText = el.text;
+            eli.textContent = el.text;
+            // prevent keyboard event, like from deleting element
+            eli.addEventListener('focus', () => {
+                isEditingText = true;
+            });
+
+            eli.addEventListener('blur', () => {
+                isEditingText = false;
+                saveToLocalStorage();
+            });
         }
         workSpace.appendChild(eli);
     });
