@@ -6,6 +6,7 @@ let circleTool = document.getElementById("circle-tool");
 let pencilTool = document.getElementById("pencil-tool");
 let rotationTool = document.getElementById("rotate-btn");
 let saveBtn = document.getElementById("save-btn");
+let deleteBtn = document.getElementById("delete-btn");
 
 // prevent default right click menu on whole document
 document.addEventListener('contextmenu', event => event.preventDefault());
@@ -275,6 +276,7 @@ exportJSON.addEventListener('click', (e) => {
             width: `${el.style.width}`,
             top: `${el.style.top}`,
             left: `${el.style.left}`,
+            rotation: el.getAttribute('rotation'),
         };
     });
 
@@ -404,6 +406,14 @@ loadFromLocalStorage();
 // manual save button
 saveBtn.addEventListener('click', () => {
     saveToLocalStorage();
+});
+
+// clear all button
+deleteBtn.addEventListener('click', () => {
+    workSpace.innerHTML = "";
+    localStorage.removeItem("editorData");
+    selectElement = null;
+    setActiveTool(selectTool);
 });
 
 // update cursor based on active tool

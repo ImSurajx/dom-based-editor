@@ -265,4 +265,11 @@ body {
 /* hover effect for save button */
 #save-btn:hover {
     color: royalblue;
+    cursor: pointer;
+}
+
+/* hover effect for delete button */
+#delete-btn:hover {
+    color: royalblue;
+    cursor: pointer;
 }
