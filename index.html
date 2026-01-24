@@ -2,69 +2,138 @@
 <html lang="en">
 
 <head>
+    <!-- defines character encoding to support most languages and symbols -->
     <meta charset="UTF-8">
+
+    <!-- makes layout responsive on different screen sizes -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- title shown in browser tab -->
     <title>Figma-Style: DOM Based Editor</title>
+
+    <!-- main stylesheet for layout and ui styling -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- preconnect improves font loading performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- google font used across the editor ui -->
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
+
+    <!-- remix icon library used for tool and ui icons -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.8.0/fonts/remixicon.css" rel="stylesheet" />
+
+    <!-- favicon for browser tab -->
+    <link rel="shortcut icon" href="./image.png" type="image/x-icon">
 </head>
 
 <body>
-    <!-- work-space: is the canvas where we can create or edit element -->
+    <!-- workspace: main canvas where user creates, moves and edits elements -->
     <div id="work-space" class="canvas"></div>
-    <!-- nav or options: this part contain logo & other opetion like export the project  -->
+
+    <!-- top navigation bar: contains project name, save, export and profile section -->
     <div id="nav" class="options">
         <div id="left">
+            <!-- editor title -->
             <p>DOM Editor</p>
             <hr>
+
+            <!-- file name section -->
             <p><i class="ri-file-line"></i> Untitled</p>
             <hr>
+
+            <!-- manual save button -->
             <p id="save-btn"><i class="ri-save-3-line"></i></i></p>
+
+            <!-- upload icon (future feature placeholder) -->
             <p><i class="ri-upload-2-line"></i></p>
+
+            <!-- search icon -->
             <i class="ri-search-line"></i>
         </div>
+
         <div id="right">
+            <!-- profile picture section -->
             <div id="pro-pic">
                 <img src="https://avatars.githubusercontent.com/u/106401203?v=4" alt="">
             </div>
+
+            <!-- export and share buttons -->
             <div id="buttons">
-                <button class="grey" id="export-html" type="button"><i class="ri-code-s-slash-line"></i> HTML</button>
-                <button class="grey" id="export-json" type="button"><i class="ri-export-line"></i> JSON</button>
-                <button class="grey" id="share-btn"><i class="ri-share-line"></i> <label
-                        class="label">Share</label></button>
+                <!-- export current design as html -->
+                <button class="grey" id="export-html" type="button">
+                    <i class="ri-code-s-slash-line"></i> HTML
+                </button>
+
+                <!-- export current design as json -->
+                <button class="grey" id="export-json" type="button">
+                    <i class="ri-export-line"></i> JSON
+                </button>
+
+                <!-- share project url -->
+                <button class="grey" id="share-btn">
+                    <i class="ri-share-line"></i>
+                    <label class="label">Share</label>
+                </button>
             </div>
         </div>
     </div>
-    <!-- tools section: contain most of the tool that required to perform operation on webpage -->
+
+    <!-- left tool panel: contains all editor tools like select, text, shapes, rotate -->
     <div id="tools">
+        <!-- select / move tool -->
         <div id="select-tool"><i class="ri-cursor-hand"></i></div>
+
+        <!-- text creation tool -->
         <div id="text-tool"><i class="ri-text"></i></div>
+
+        <!-- rectangle creation tool -->
         <div id="rectangle-tool"><i class="ri-rectangle-line"></i></div>
+
+        <!-- circle creation tool -->
         <div id="circle-tool"><i class="ri-circle-line"></i></div>
+
+        <!-- pencil tool (future drawing feature placeholder) -->
         <div id="pencil-tool"><i class="ri-pencil-line"></i></div>
+
+        <!-- rotate selected element -->
         <div id="rotate-btn"><i class="ri-rotate-lock-line"></i></div>
+
+        <!-- future tools / placeholders -->
         <div><i class="ri-crop-2-line"></i></div>
         <div><i class="ri-stack-fill"></i></div>
         <div><i class="ri-arrow-right-up-long-line"></i></div>
         <div><i class="ri-arrow-go-back-line"></i></div>
         <div><i class="ri-arrow-go-forward-line"></i></div>
     </div>
-    <!-- bottom bar: contain menu icon & zoom options -->
+
+    <!-- bottom bar: contains zoom controls, help and ai icons -->
     <div id="bottom-menu">
         <div id="btm-left">
+            <!-- documentation or guide icon -->
             <i class="ri-book-read-fill"></i>
         </div>
+
         <div id="btm-right">
-            <div id="percentage"> <span id="subtraction">-</span> <span>100%</span><span id="addition">+</span></div>
+            <!-- zoom percentage controls -->
+            <div id="percentage">
+                <span id="subtraction">-</span>
+                <span>100%</span>
+                <span id="addition">+</span>
+            </div>
+
+            <!-- help icon -->
             <div id="help"><i class="ri-question-fill"></i></div>
+
+            <!-- ai feature placeholder -->
             <div id="ai"><i class="ri-bard-fill"></i></div>
         </div>
     </div>
+
+    <!-- main javascript file controlling editor logic -->
     <script src="./script.js"></script>
 </body>
 

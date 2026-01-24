@@ -1,3 +1,6 @@
+/* reset default browser margin and padding */
+/* box-sizing border-box makes width and height predictable */
+/* poppins font applied globally */
 * {
     margin: 0;
     padding: 0;
@@ -5,6 +8,9 @@
     font-family: "Poppins", sans-serif;
 }
 
+/* full height and width for html and body */
+/* light background for whole app */
+/* removes tap highlight on mobile devices */
 html,
 body {
     height: 100%;
@@ -13,27 +19,31 @@ body {
     -webkit-tap-highlight-color: transparent;
 }
 
-/* canvas section: contain background layout grid layout, most of things goona happen in this part */
+/* workspace canvas */
+/* this is the main editor area where elements are created and moved */
 #work-space {
     height: 100vh;
     width: 100vw;
     background: whitesmoke;
     position: relative;
+
+    /* grid background using css gradients */
+    /* horizontal and vertical grid lines */
+    /* each line is 1px and repeats every 50px */
     background-image:
-        /* new concept: use gradient like a grid, break gradient into solid color of lines */
-        /* to right → paint left to right */
-        /* color 1px → draw 1px grid line */
-        /* transparent → stop color immediately (no fade) */
-        /* background-size → distance between each repeated line */
         linear-gradient(to right, #e5e5e5 1px, transparent 1px),
         linear-gradient(to bottom, #e5e5e5 1px, transparent 1px);
-    ;
     background-size: 50px 50px;
+
+    /* default cursor for canvas */
     cursor: pointer;
+
+    /* prevents text selection while dragging elements */
     user-select: none;
 }
 
-/* top navigation bar: logo of web page, file name, setting upload or export buttons are here. */
+/* top navigation bar */
+/* contains project title, save, export and profile section */
 #nav {
     display: flex;
     justify-content: space-between;
@@ -44,6 +54,8 @@ body {
     padding: 10px;
 }
 
+/* left side of navigation */
+/* contains editor name, file name and save/upload icons */
 #nav #left {
     display: flex;
     width: fit-content;
@@ -53,15 +65,20 @@ body {
     background: #fff;
     padding: 10px;
     border-radius: 10px;
+
+    /* soft shadow for floating effect */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     cursor: pointer;
 }
 
+/* icon styling inside nav left section */
 #nav #left i {
     font-size: 20px;
     margin: 5px;
 }
 
+/* right side of navigation */
+/* contains profile picture and export buttons */
 #nav #right {
     display: flex;
     width: fit-content;
@@ -74,11 +91,13 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+/* profile image container */
 #nav #right #pro-pic {
     width: 40px;
     margin-top: 5px;
 }
 
+/* profile image styling */
 #nav #right #pro-pic img {
     height: 100%;
     width: 100%;
@@ -87,6 +106,7 @@ body {
     border-radius: 50%;
 }
 
+/* container for export and share buttons */
 #nav #right #buttons {
     display: flex;
     gap: 10px;
@@ -94,6 +114,7 @@ body {
     align-items: center;
 }
 
+/* default button styling */
 #nav #right #buttons button {
     border: none;
     padding: 8px 20px;
@@ -108,6 +129,7 @@ body {
     cursor: pointer;
 }
 
+/* grey variant of buttons (export / share) */
 #nav #right #buttons .grey {
     border: none;
     padding: 8px 20px;
@@ -117,10 +139,12 @@ body {
     color: #000;
 }
 
+/* icons inside buttons */
 #nav #right #buttons button i {
     font-size: 20px;
 }
 
+/* hover effect for grey buttons */
 #nav #right #buttons .grey:hover {
     background: royalblue;
     border-color: #000;
@@ -128,8 +152,8 @@ body {
     cursor: pointer;
 }
 
-
-/* left tool panel: contain most of tools which we are goint to use here */
+/* left tool panel */
+/* contains tools like select, text, shapes and rotate */
 #tools {
     position: absolute;
     top: 20%;
@@ -146,7 +170,8 @@ body {
     cursor: pointer;
 }
 
-/* bottom menu: contain menu icon, percentage section, help icon or ai icons */
+/* bottom menu bar */
+/* contains zoom controls, help and ai icons */
 #bottom-menu {
     width: 100%;
     position: absolute;
@@ -155,6 +180,7 @@ body {
     justify-content: space-between;
 }
 
+/* left section of bottom menu */
 #bottom-menu #btm-left {
     background: #fff;
     padding: 10px 15px;
@@ -164,6 +190,7 @@ body {
     margin: 10px;
 }
 
+/* right section of bottom menu */
 #bottom-menu #btm-right {
     display: flex;
     background: #fff;
@@ -175,6 +202,7 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+/* zoom percentage container */
 #bottom-menu #btm-right #percentage {
     display: flex;
     background: #fff;
@@ -186,6 +214,7 @@ body {
     border-radius: 10px;
 }
 
+/* zoom in button */
 #bottom-menu #btm-right #percentage #addition {
     background: whitesmoke;
     width: 30px;
@@ -193,6 +222,7 @@ body {
     border-radius: 50%;
 }
 
+/* zoom out button */
 #bottom-menu #btm-right #percentage #subtraction {
     background: whitesmoke;
     width: 30px;
@@ -200,32 +230,39 @@ body {
     border-radius: 50%;
 }
 
+/* help icon styling */
 #bottom-menu #btm-right #help {
     margin: 10px;
     font-size: 20px;
 }
 
+/* ai icon styling */
 #bottom-menu #btm-right #ai {
     margin-right: 15px;
     font-size: 20px;
 }
 
+/* active tool highlight */
 .active-tool {
     color: royalblue;
 }
 
+/* selected element visual indicator */
 .selected {
     background-color: royalblue;
 }
 
+/* circle shape styling */
 .circle {
     border-radius: 50%;
 }
 
+/* text box background kept transparent */
 .text-box {
     background: transparent;
 }
 
+/* hover effect for save button */
 #save-btn:hover {
     color: royalblue;
 }

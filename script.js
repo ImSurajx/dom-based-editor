@@ -1,4 +1,4 @@
-// selecting tools
+// selecting tools from toolbar
 let selectTool = document.getElementById("select-tool");
 let textTool = document.getElementById("text-tool");
 let rectangleTool = document.getElementById("rectangle-tool");
@@ -7,30 +7,31 @@ let pencilTool = document.getElementById("pencil-tool");
 let rotationTool = document.getElementById("rotate-btn");
 let saveBtn = document.getElementById("save-btn");
 
-// prevent deafult behaviour
+// prevent default right click menu on whole document
 document.addEventListener('contextmenu', event => event.preventDefault());
 
-
-// selecting workspace
+// selecting workspace (main canvas)
 let workSpace = document.getElementById("work-space");
 
-// selecting element
+// currently selected element on canvas
 let selectElement = null;
 
-// varaible that manage states
+// variable that tracks which tool is active
 let activeTool = document.getElementById("select-tool");
 
-// visual effect on active element
+// add active class to default tool
 activeTool.classList.add('active-tool');
+
+// tool click handlers (all tools use same helper function)
 selectTool.addEventListener('click', () => {
     setActiveTool(selectTool);
-})
+});
 textTool.addEventListener('click', () => {
     setActiveTool(textTool);
 });
 circleTool.addEventListener('click', () => {
     setActiveTool(circleTool);
-})
+});
 rectangleTool.addEventListener('click', () => {
     setActiveTool(rectangleTool);
 });
@@ -38,50 +39,66 @@ pencilTool.addEventListener('click', () => {
     setActiveTool(pencilTool);
 });
 
-// creating a dynamic element
-let startX = 0, startY = 0, isCreating = false, justCreated = false;
+// variables used for creating and dragging elements
+let startX = 0, startY = 0;
+let isCreating = false;
+let justCreated = false;
 let currentX = 0, currentY = 0;
 let rectangle = null;
-// movement variables
+
+// variables used for moving elements
 let isMoving = false;
 let mouseStartX = 0;
 let mouseStartY = 0;
 let elementStartX = 0;
 let elementStartY = 0;
-let dx = 0, dy = 0; // calculate cursor movement
-let elementCount = 0; // count element
+let dx = 0, dy = 0;
+
+// count total elements for unique id generation
+let elementCount = 0;
+
+// track when user is editing text to prevent delete key issues
 let isEditingText = false;
+
+// handle mouse down on workspace
 workSpace.addEventListener('mousedown', (e) => {
+
+    // start moving element if select tool is active
     if (activeTool === selectTool && selectElement && selectElement === e.target) {
         isMoving = true;
+
         let rect = workSpace.getBoundingClientRect();
 
-        // calculate mouse start postition
+        // store mouse starting position
         mouseStartX = e.clientX - rect.left;
         mouseStartY = e.clientY - rect.top;
 
-        // element start position
+        // store element starting position
         elementStartX = +(selectElement.style.left.replace("px", ""));
         elementStartY = +(selectElement.style.top.replace("px", ""));
         return;
     }
-    // decide: we are creating a element or selecting
+
+    // decide whether to create a new element
     if (activeTool !== selectTool) {
         isCreating = true;
     } else {
         isCreating = false;
     }
+
     const rect = workSpace.getBoundingClientRect();
 
-    startX = e.clientX - rect.left; // calculate initial position of element in x plane
-    startY = e.clientY - rect.top; // calculate initial position of element in y plane
-    // creating a rectangle when tool is active
+    // initial mouse position for element creation
+    startX = e.clientX - rect.left;
+    startY = e.clientY - rect.top;
+
+    // create elements based on active tool
     if (isCreating === true) {
+
+        // rectangle creation
         if (activeTool === rectangleTool) {
             rectangle = document.createElement('div');
-            // setting unique id to each element just after creation
-            let uniqeID = `rectangle+${++elementCount}`;
-            rectangle.id = uniqeID;
+            rectangle.id = `rectangle+${++elementCount}`;
             rectangle.style.position = "absolute";
             rectangle.style.left = `${startX}px`;
             rectangle.style.top = `${startY}px`;
@@ -90,14 +107,13 @@ workSpace.addEventListener('mousedown', (e) => {
             rectangle.style.border = "4px solid black";
             rectangle.classList.add('rectangle');
             rectangle.setAttribute('rotation', 0);
-
             workSpace.appendChild(rectangle);
         }
+
+        // circle creation
         if (activeTool === circleTool) {
             rectangle = document.createElement('div');
-            // setting unique id to each element just after creation
-            let uniqeID = `circle+${++elementCount}`;
-            rectangle.id = uniqeID;
+            rectangle.id = `circle+${++elementCount}`;
             rectangle.style.position = "absolute";
             rectangle.style.left = `${startX}px`;
             rectangle.style.top = `${startY}px`;
@@ -108,40 +124,49 @@ workSpace.addEventListener('mousedown', (e) => {
             rectangle.setAttribute('rotation', 0);
             workSpace.appendChild(rectangle);
         }
+
+        // text box creation
         if (activeTool === textTool) {
             rectangle = document.createElement('div');
-            // setting unique id to each element just after creation
-            let uniqeID = `textBox+${++elementCount}`;
-            rectangle.id = uniqeID;
+            rectangle.id = `textBox+${++elementCount}`;
             rectangle.style.position = "absolute";
             rectangle.style.left = `${startX}px`;
             rectangle.style.top = `${startY}px`;
             rectangle.style.minWidth = "80px";
             rectangle.style.minHeight = "30px";
-            rectangle.style.border = "4px solid black";
+            rectangle.style.border = "4px solid royalblue";
             rectangle.classList.add('text-box');
             rectangle.setAttribute('rotation', 0);
             rectangle.contentEditable = true;
-            // rectangle.innerText = "type here...";
             workSpace.appendChild(rectangle);
+
+            // auto focus text box after creation
             rectangle.focus();
+
+            // switch back to select tool after creating text
             setActiveTool(selectTool);
             updateCursor();
 
+            // track text editing state
             rectangle.addEventListener('focus', () => {
                 isEditingText = true;
             });
             rectangle.addEventListener('blur', () => {
                 isEditingText = false;
-            })
+            });
+
+            // save text changes instantly
             rectangle.addEventListener("input", () => {
                 saveToLocalStorage();
             });
         }
     }
 });
-// drag to create element
+
+// mouse move handler for dragging and resizing
 workSpace.addEventListener('mousemove', (e) => {
+
+    // move selected element
     if (isMoving) {
         let rect = workSpace.getBoundingClientRect();
         let currentMouseX = e.clientX - rect.left;
@@ -154,45 +179,55 @@ workSpace.addEventListener('mousemove', (e) => {
         selectElement.style.top = `${elementStartY + dy}px`;
         saveToLocalStorage();
     }
+
+    // resize element while creating
     if (isCreating === false || rectangle === null) return;
+
     const rect = workSpace.getBoundingClientRect();
     currentX = e.clientX - rect.left;
     currentY = e.clientY - rect.top;
-    rectangle.style.width = `${currentX - startX}px`
-    rectangle.style.height = `${currentY - startY}px`
+
+    rectangle.style.width = `${currentX - startX}px`;
+    rectangle.style.height = `${currentY - startY}px`;
 });
-// stop draging, & element will be created
+
+// mouse up handler to finalize creation or movement
 workSpace.addEventListener('mouseup', (e) => {
-    // stop moving
+
+    // stop moving element
     if (isMoving) {
         isMoving = false;
         return;
     }
+
+    // stop creating element
     if (isCreating === false) return;
-    else {
-        isCreating = false;
-        saveToLocalStorage();
-    }
-    // make element selected just after creation
+    isCreating = false;
+    saveToLocalStorage();
+
+    // auto select newly created element
     if (selectElement !== null) {
         selectElement.classList.remove('selected');
         selectElement = null;
     }
+
     selectElement = rectangle;
     selectElement.classList.add('selected');
     justCreated = true;
     rectangle = null;
-    updateCursor(); // update cursor just after element creation.
-})
+    updateCursor();
+});
 
-// selecting element after creation
+// handle element selection
 workSpace.addEventListener('click', (e) => {
-    // fix element not auto selecting issue just after creation
+
+    // skip click right after creation
     if (justCreated) {
         justCreated = false;
         return;
     }
-    // Clicked on empty space
+
+    // deselect if clicked on empty space
     if (e.target === workSpace) {
         if (selectElement) {
             selectElement.classList.remove('selected');
@@ -200,7 +235,8 @@ workSpace.addEventListener('click', (e) => {
         }
         return;
     }
-    // Clicked on an element
+
+    // select clicked element
     if (selectElement) {
         selectElement.classList.remove('selected');
     }
@@ -208,9 +244,10 @@ workSpace.addEventListener('click', (e) => {
     selectElement.classList.add('selected');
 });
 
-//  remove element on pressing delete key
+// delete selected element using keyboard
 document.addEventListener('keydown', (e) => {
     if (isEditingText === true) return;
+
     if (e.key == 'Backspace' || e.key == 'Delete') {
         if (selectElement) {
             selectElement.remove();
@@ -221,186 +258,139 @@ document.addEventListener('keydown', (e) => {
             setActiveTool(selectTool);
             rectangle = null;
             saveToLocalStorage();
-        } else {
-            return;
         }
     }
 });
 
-//  export json
+// export canvas data as json
 let exportJSON = document.getElementById('export-json');
 exportJSON.addEventListener('click', (e) => {
     let allChildren = [...workSpace.children];
     let elements = [];
-    let i = 0;
-    allChildren.forEach((el) => {
-        console.log(el.style);
+
+    allChildren.forEach((el, i) => {
         elements[i] = {
             elementType: `${el.className.replace(" selected", "")}`,
             height: `${el.style.height}`,
             width: `${el.style.width}`,
             top: `${el.style.top}`,
             left: `${el.style.left}`,
-        }
-        i++;
-    })
-    // convert JS object to JSON string (used json template that present on the internet)
+        };
+    });
+
     const jsonData = JSON.stringify(elements, null, 2);
-    // create a file-like object
     const blob = new Blob([jsonData], { type: "application/json" });
-    // create a temporary download link
     const url = URL.createObjectURL(blob);
+
     const a = document.createElement("a");
     a.href = url;
     a.download = "design.json";
-    // trigger download
     a.click();
-    // cleanup
     URL.revokeObjectURL(url);
 });
 
-// export html
+// export canvas as html file
 let exportHTML = document.getElementById('export-html');
 exportHTML.addEventListener('click', (el) => {
-    let allChildren = [...workSpace.children];
     let htmlContent = "";
-    allChildren.map((el) => {
+    [...workSpace.children].forEach(el => {
         htmlContent += `${el.outerHTML}\n`;
-    })
+    });
+
     let html = `
-     <!DOCTYPE html>
-        <html lang="en">
-            <head>
-                <style> body {position: relative;}</style>
-            </head>
-            <body>
-                ${htmlContent}
-            </body>
-        </html>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head><style> body {position: relative;}</style></head>
+    <body>${htmlContent}</body>
+    </html>
     `;
-    // create a file-like object
+
     const blob = new Blob([html], { type: "text/html" });
-    // create a temporary download link
     const url = URL.createObjectURL(blob);
+
     const a = document.createElement("a");
     a.href = url;
     a.download = "index.html";
-    // trigger download
     document.body.appendChild(a);
     a.click();
-    // cleanup
     URL.revokeObjectURL(url);
-})
+});
 
-// share button -> copy to clipboard
+// share button copies current url
 shareBtn = document.getElementById('share-btn');
 const label = document.querySelector('.label');
 shareBtn.addEventListener('click', (e) => {
-    const url = window.location.href; // get url from window
-    navigator.clipboard.writeText(url);
+    navigator.clipboard.writeText(window.location.href);
     label.innerText = "Copied";
-    setTimeout(() => {
-        label.innerText = "Share";
-    }, 3000)
+    setTimeout(() => label.innerText = "Share", 3000);
 });
 
-// rotation element on click of rotate icon by 30 Degree
+// rotate selected element by 15 degrees
 rotationTool.addEventListener('click', () => {
-    if (!selectElement) return; // if selectElement is empty return;
+    if (!selectElement) return;
     let rotationData = +(selectElement.getAttribute('rotation')) + 15;
     selectElement.style.transform = `rotate(${rotationData}deg)`;
     selectElement.setAttribute('rotation', rotationData);
     saveToLocalStorage();
-    // click feedback
-    rotationTool.style.color = "royalblue";
-
-    setTimeout(() => {
-        rotationTool.style.color = "";
-    }, 200);
 });
 
-// arrow key: move element on press of arrow keys
+// move element using arrow keys
 document.addEventListener('keydown', (e) => {
-    if (!selectElement) return;
-    if (isEditingText) return;
+    if (!selectElement || isEditingText) return;
     e.preventDefault();
-    if (e.key === 'ArrowUp') {
-        const top = (+(selectElement.style.top.replace("px", "")) - 5);
-        selectElement.style.top = `${top}px`;
-        saveToLocalStorage();
-    }
-    if (e.key === 'ArrowDown') {
-        const top = (+(selectElement.style.top.replace("px", "")) + 5);
-        selectElement.style.top = `${top}px`;
-        saveToLocalStorage();
-    }
-    if (e.key === 'ArrowLeft') {
-        const left = (+(selectElement.style.left.replace("px", "")) - 5);
-        selectElement.style.left = `${left}px`;
-        saveToLocalStorage();
-    }
-    if (e.key === 'ArrowRight') {
-        const left = (+(selectElement.style.left.replace("px", "")) + 5);
-        selectElement.style.left = `${left}px`;
-        saveToLocalStorage();
-    }
-})
 
-// localStorage: save to local storage
+    if (e.key === 'ArrowUp') selectElement.style.top = `${+(selectElement.style.top.replace("px", "")) - 5}px`;
+    if (e.key === 'ArrowDown') selectElement.style.top = `${+(selectElement.style.top.replace("px", "")) + 5}px`;
+    if (e.key === 'ArrowLeft') selectElement.style.left = `${+(selectElement.style.left.replace("px", "")) - 5}px`;
+    if (e.key === 'ArrowRight') selectElement.style.left = `${+(selectElement.style.left.replace("px", "")) + 5}px`;
+
+    saveToLocalStorage();
+});
+
+// save canvas state to local storage
 function saveToLocalStorage() {
-    // extract all the children from workspace
-    let allChildren = [...workSpace.children];
     let elements = [];
-    let i = 0;
-    allChildren.forEach((el) => {
+
+    [...workSpace.children].forEach((el, i) => {
         let type = "rectangle";
         if (el.classList.contains("text-box")) type = "text-box";
         else if (el.classList.contains("circle")) type = "circle";
+
         elements[i] = {
             elementType: type,
-            height: `${el.style.height}`,
-            width: `${el.style.width}`,
-            top: `${el.style.top}`,
-            left: `${el.style.left}`,
-            rotation: `${el.getAttribute('rotation')}`,
+            height: el.style.height,
+            width: el.style.width,
+            top: el.style.top,
+            left: el.style.left,
+            rotation: el.getAttribute('rotation'),
             text: el.classList.contains("text-box") ? el.textContent : "",
-        }
-        i++;
-    })
-    // convert JS object to JSON string (used json template that present on the internet)
-    const jsonData = JSON.stringify(elements, null, 2);
-    // create a file-like object
-    localStorage.setItem("editorData", jsonData);
+        };
+    });
+
+    localStorage.setItem("editorData", JSON.stringify(elements, null, 2));
 }
 
-// localStorage: reload from local storage
+// load saved data from local storage on page load
 function loadFromLocalStorage() {
     const data = localStorage.getItem("editorData");
-    if (!data) {
-        return;
-    }
-    const elements = JSON.parse(data);
-    elements.forEach((el) => {
+    if (!data) return;
+
+    JSON.parse(data).forEach(el => {
         let eli = document.createElement('div');
-        el.elementType.split(" ").forEach((cls) => {
-            eli.classList.add(cls);
-        });
+        eli.classList.add(el.elementType);
         eli.style.position = "absolute";
-        eli.style.height = (el.height);
-        eli.style.width = (el.width);
+        eli.style.height = el.height;
+        eli.style.width = el.width;
         eli.style.top = el.top;
-        eli.style.left = (el.left);
+        eli.style.left = el.left;
         eli.setAttribute("rotation", el.rotation);
         eli.style.transform = `rotate(${el.rotation}deg)`;
         eli.style.border = "4px solid black";
-        if (el.elementType.includes("text-box")) {
+
+        if (el.elementType === "text-box") {
             eli.contentEditable = true;
             eli.textContent = el.text;
-            // prevent keyboard event, like from deleting element
-            eli.addEventListener('focus', () => {
-                isEditingText = true;
-            });
-
+            eli.addEventListener('focus', () => isEditingText = true);
             eli.addEventListener('blur', () => {
                 isEditingText = false;
                 saveToLocalStorage();
@@ -411,20 +401,21 @@ function loadFromLocalStorage() {
 }
 loadFromLocalStorage();
 
-saveBtn.addEventListener('click', (el) => {
+// manual save button
+saveBtn.addEventListener('click', () => {
     saveToLocalStorage();
-})
+});
 
-// updateCursor: change cursor according to active tool,
+// update cursor based on active tool
 function updateCursor() {
     if (activeTool === textTool) {
-        workSpace.style.cursor = "text"; // while creating text
+        workSpace.style.cursor = "text";
     } else {
-        workSpace.style.cursor = "pointer"; // default/select
+        workSpace.style.cursor = "pointer";
     }
 }
 
-// update active-tool: fix issue with tools icon, now it's autoupdating
+// helper function to manage active tool state
 function setActiveTool(tool) {
     if (activeTool) activeTool.classList.remove('active-tool');
     activeTool = tool;
