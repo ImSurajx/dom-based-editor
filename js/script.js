@@ -63,6 +63,12 @@ let isEditingText = false;
 
 // handle mouse down on workspace
 workSpace.addEventListener('mousedown', (e) => {
+    // only newly created element get the handler or selected on
+    if (selectElement) {
+        selectElement.classList.remove('selected');
+        selectElement.querySelectorAll('.handler').forEach(h => h.remove());
+        selectElement = null;
+    }
 
     // start moving element if select tool is active
     if (activeTool === selectTool && selectElement && selectElement === e.target) {
@@ -215,7 +221,10 @@ workSpace.addEventListener('mouseup', (e) => {
     }
 
     selectElement = rectangle;
+    // remove old handler if any
     selectElement.classList.add('selected');
+    selectElement.querySelectorAll('.handler').forEach(h => h.remove());
+    addResizeHandlers();
     justCreated = true;
     rectangle = null;
     updateCursor();
@@ -235,6 +244,8 @@ workSpace.addEventListener('click', (e) => {
     if (e.target === workSpace) {
         if (selectElement) {
             selectElement.classList.remove('selected');
+            // remove old handler if any
+            selectElement.querySelectorAll('.handler').forEach(h => h.remove());
             selectElement = null;
         }
         return;
@@ -243,9 +254,12 @@ workSpace.addEventListener('click', (e) => {
     // select clicked element
     if (selectElement) {
         selectElement.classList.remove('selected');
+        // remove old handler if any
+        selectElement.querySelectorAll('.handler').forEach(h => h.remove());
     }
     selectElement = e.target;
     selectElement.classList.add('selected');
+    addResizeHandlers();
 });
 
 // delete selected element using keyboard
@@ -434,4 +448,47 @@ function setActiveTool(tool) {
     activeTool = tool;
     activeTool.classList.add('active-tool');
     updateCursor();
+}
+
+// handler for resizing element
+function addResizeHandlers() {
+    if (!selectElement) return;
+    // remove old handler if any
+    selectElement.querySelectorAll('.handler').forEach(h => h.remove());
+
+    // top left handler
+    let topLeft = document.createElement('div');
+    topLeft.id = "top-left";
+    topLeft.classList.add('handler');
+    topLeft.style.top = "0%";
+    topLeft.style.left = "0%";
+    topLeft.dataset.dir = "tl";
+    selectElement.appendChild(topLeft);
+
+    // top right handler
+    let topRight = document.createElement('div');
+    topRight.id = "top-right";
+    topRight.classList.add('handler');
+    topRight.style.top = "0%";
+    topRight.style.left = "100%";
+    topRight.dataset.dir = "tr";
+    selectElement.appendChild(topRight);
+
+    // bottom left handler
+    let bottomLeft = document.createElement('div');
+    bottomLeft.id = "bottom-left";
+    bottomLeft.classList.add('handler');
+    bottomLeft.style.top = "100%";
+    bottomLeft.style.left = "0%";
+    bottomLeft.dataset.dir = "bl";
+    selectElement.appendChild(bottomLeft);
+
+    // bottom right handler
+    let bottomRight = document.createElement('div');
+    bottomRight.id = "bottom-right";
+    bottomRight.classList.add('handler');
+    bottomRight.style.top = "100%";
+    bottomRight.style.left = "100%";
+    bottomRight.dataset.dir = "br";
+    selectElement.appendChild(bottomRight);
 }
