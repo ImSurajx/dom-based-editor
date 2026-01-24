@@ -211,7 +211,7 @@ workSpace.addEventListener('click', (e) => {
 
 //  remove element on pressing delete key
 document.addEventListener('keydown', (e) => {
-    if(isEditingText === true) return;
+    if (isEditingText === true) return;
     if (e.key == 'Backspace' || e.key == 'Delete') {
         if (selectElement) {
             selectElement.remove();
@@ -317,3 +317,26 @@ rotationTool.addEventListener('click', () => {
         rotationTool.style.color = "";
     }, 200);
 });
+
+// arrow key: move element on press of arrow keys
+document.addEventListener('keydown', (e) => {
+    if (!selectElement) return;
+    if (isEditingText) return;
+    e.preventDefault();
+    if (e.key === 'ArrowUp') {
+        const top = (+(selectElement.style.top.replace("px", "")) - 5);
+        selectElement.style.top = `${top}px`;
+    }
+    if (e.key === 'ArrowDown') {
+        const top = (+(selectElement.style.top.replace("px", "")) + 5);
+        selectElement.style.top = `${top}px`;
+    }
+    if (e.key === 'ArrowLeft') {
+        const left = (+(selectElement.style.left.replace("px", "")) - 5);
+        selectElement.style.left = `${left}px`;
+    }
+    if (e.key === 'ArrowRight') {
+        const left = (+(selectElement.style.left.replace("px", "")) + 5);
+        selectElement.style.left = `${left}px`;
+    }
+})
