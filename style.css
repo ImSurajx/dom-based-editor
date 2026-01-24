@@ -218,10 +218,14 @@ body {
     background-color: royalblue;
 }
 
-.circle{
+.circle {
     border-radius: 50%;
 }
 
-.text-box{
+.text-box {
     background: transparent;
+}
+
+#save-btn:hover {
+    color: royalblue;
 }

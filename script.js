@@ -5,6 +5,7 @@ let rectangleTool = document.getElementById("rectangle-tool");
 let circleTool = document.getElementById("circle-tool");
 let pencilTool = document.getElementById("pencil-tool");
 let rotationTool = document.getElementById("rotate-btn");
+let saveBtn = document.getElementById("save-btn");
 
 // prevent deafult behaviour
 document.addEventListener('contextmenu', event => event.preventDefault());
@@ -22,29 +23,19 @@ let activeTool = document.getElementById("select-tool");
 // visual effect on active element
 activeTool.classList.add('active-tool');
 selectTool.addEventListener('click', () => {
-    if (activeTool !== selectTool) activeTool.classList.remove('active-tool');
-    activeTool = selectTool;
-    activeTool.classList.add('active-tool');
+    setActiveTool(selectTool);
 })
 textTool.addEventListener('click', () => {
-    if (activeTool !== textTool) activeTool.classList.remove('active-tool');
-    activeTool = textTool;
-    activeTool.classList.add('active-tool');
+    setActiveTool(textTool);
 });
 circleTool.addEventListener('click', () => {
-    if (activeTool !== circleTool) activeTool.classList.remove('active-tool');
-    activeTool = circleTool;
-    activeTool.classList.add('active-tool');
+    setActiveTool(circleTool);
 })
 rectangleTool.addEventListener('click', () => {
-    if (activeTool !== rectangleTool) activeTool.classList.remove('active-tool');
-    activeTool = rectangleTool;
-    activeTool.classList.add('active-tool');
+    setActiveTool(rectangleTool);
 });
 pencilTool.addEventListener('click', () => {
-    if (activeTool !== pencilTool) activeTool.classList.remove('active-tool');
-    activeTool = pencilTool;
-    activeTool.classList.add('active-tool');
+    setActiveTool(pencilTool);
 });
 
 // creating a dynamic element
@@ -134,7 +125,9 @@ workSpace.addEventListener('mousedown', (e) => {
             // rectangle.innerText = "type here...";
             workSpace.appendChild(rectangle);
             rectangle.focus();
-            activeTool = selectTool;
+            setActiveTool(selectTool);
+            updateCursor();
+
             rectangle.addEventListener('focus', () => {
                 isEditingText = true;
             });
@@ -189,6 +182,7 @@ workSpace.addEventListener('mouseup', (e) => {
     selectElement.classList.add('selected');
     justCreated = true;
     rectangle = null;
+    updateCursor(); // update cursor just after element creation.
 })
 
 // selecting element after creation
@@ -224,7 +218,7 @@ document.addEventListener('keydown', (e) => {
             isCreating = false;
             justCreated = false;
             isMoving = false;
-            activeTool = selectTool;
+            setActiveTool(selectTool);
             rectangle = null;
             saveToLocalStorage();
         } else {
@@ -416,3 +410,24 @@ function loadFromLocalStorage() {
     });
 }
 loadFromLocalStorage();
+
+saveBtn.addEventListener('click', (el) => {
+    saveToLocalStorage();
+})
+
+// updateCursor: change cursor according to active tool,
+function updateCursor() {
+    if (activeTool === textTool) {
+        workSpace.style.cursor = "text"; // while creating text
+    } else {
+        workSpace.style.cursor = "pointer"; // default/select
+    }
+}
+
+// update active-tool: fix issue with tools icon, now it's autoupdating
+function setActiveTool(tool) {
+    if (activeTool) activeTool.classList.remove('active-tool');
+    activeTool = tool;
+    activeTool.classList.add('active-tool');
+    updateCursor();
+}
