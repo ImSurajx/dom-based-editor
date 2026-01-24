@@ -58,7 +58,8 @@ let mouseStartY = 0;
 let elementStartX = 0;
 let elementStartY = 0;
 let dx = 0, dy = 0; // calculate cursor movement
-
+let elementCount = 0; // count element
+let isEditingText = false;
 workSpace.addEventListener('mousedown', (e) => {
     if (activeTool === selectTool && selectElement && selectElement === e.target) {
         isMoving = true;
@@ -87,6 +88,9 @@ workSpace.addEventListener('mousedown', (e) => {
     if (isCreating === true) {
         if (activeTool === rectangleTool) {
             rectangle = document.createElement('div');
+            // setting unique id to each element just after creation
+            let uniqeID = `rectangle+${++elementCount}`;
+            rectangle.id = uniqeID;
             rectangle.style.position = "absolute";
             rectangle.style.left = `${startX}px`;
             rectangle.style.top = `${startY}px`;
@@ -95,10 +99,14 @@ workSpace.addEventListener('mousedown', (e) => {
             rectangle.style.border = "4px solid black";
             rectangle.classList.add('rectangle');
             rectangle.setAttribute('rotation', 0);
+
             workSpace.appendChild(rectangle);
         }
         if (activeTool === circleTool) {
             rectangle = document.createElement('div');
+            // setting unique id to each element just after creation
+            let uniqeID = `circle+${++elementCount}`;
+            rectangle.id = uniqeID;
             rectangle.style.position = "absolute";
             rectangle.style.left = `${startX}px`;
             rectangle.style.top = `${startY}px`;
@@ -108,6 +116,31 @@ workSpace.addEventListener('mousedown', (e) => {
             rectangle.classList.add('circle');
             rectangle.setAttribute('rotation', 0);
             workSpace.appendChild(rectangle);
+        }
+        if (activeTool === textTool) {
+            rectangle = document.createElement('div');
+            // setting unique id to each element just after creation
+            let uniqeID = `textBox+${++elementCount}`;
+            rectangle.id = uniqeID;
+            rectangle.style.position = "absolute";
+            rectangle.style.left = `${startX}px`;
+            rectangle.style.top = `${startY}px`;
+            rectangle.style.minWidth = "80px";
+            rectangle.style.minHeight = "30px";
+            rectangle.style.border = "4px solid black";
+            rectangle.classList.add('text-box');
+            rectangle.setAttribute('rotation', 0);
+            rectangle.contentEditable = true;
+            // rectangle.innerText = "type here...";
+            workSpace.appendChild(rectangle);
+            rectangle.focus();
+            activeTool = selectTool;
+            rectangle.addEventListener('focus', () => {
+                isEditingText = true;
+            });
+            rectangle.addEventListener('blur', () => {
+                isEditingText = false;
+            })
         }
     }
 });
@@ -178,6 +211,7 @@ workSpace.addEventListener('click', (e) => {
 
 //  remove element on pressing delete key
 document.addEventListener('keydown', (e) => {
+    if(isEditingText === true) return;
     if (e.key == 'Backspace' || e.key == 'Delete') {
         if (selectElement) {
             selectElement.remove();

@@ -221,3 +221,7 @@ body {
 .circle{
     border-radius: 50%;
 }
+
+.text-box{
+    background: transparent;
+}
