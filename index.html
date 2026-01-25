@@ -134,9 +134,9 @@
     </div>
     <!-- layers panel: control layer position like sending backward or forward -->
     <div id="layers-panel">
-        <h1>Layers
+        <h2>Layers
             <hr>
-        </h1>
+        </h2>
         <div id="layers">
         </div>
         <div id="buttons">
@@ -149,6 +149,38 @@
                 <p>Forward</p>
             </button>
         </div>
+    </div>
+
+    <!-- properties panel -->
+    <div id="properties-panel">
+        <h2>Properties<hr></h2>
+        
+
+        <!-- width -->
+        <div class="prop-group">
+            <label for="prop-width">Width</label>
+            <input type="number" id="prop-width" placeholder="px">
+        </div>
+
+        <!-- height -->
+        <div class="prop-group">
+            <label for="prop-height">Height</label>
+            <input type="number" id="prop-height" placeholder="px">
+        </div>
+
+        <!-- background color -->
+        <div class="prop-group">
+            <label for="prop-bg">Background</label>
+            <input type="color" id="prop-bg">
+        </div>
+
+        <!-- text content (only for text elements) -->
+        <div class="prop-group" id="text-prop">
+            <label for="prop-text">Text</label>
+            <input type="text" id="prop-text" placeholder="edit text">
+        </div>
+
+        <button><i class="ri-file-edit-line"></i> Update</button>
     </div>
 
     <!-- main javascript file controlling editor logic -->

@@ -295,7 +295,7 @@ body {
 
 /* layers panel */
 #layers-panel {
-    height: 50vh;
+    height: 35vh;
     width: fit-content;
     display: flex;
     flex-direction: column;
@@ -382,4 +382,67 @@ body {
     background: royalblue;
     border: 1px solid #fff;
     color: #fff;
+}
+
+/* properties panel */
+#properties-panel{
+    height: 35vh;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    justify-content: space-around;
+    top: 50vh;
+    right: 0;
+    background: #fff;
+    margin: 10px;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
+    width: 15.5%;
+    gap: 10px;
+    cursor: pointer;
+    cursor: pointer;
+}
+
+#properties-panel .prop-group{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+#properties-panel div input{
+    padding: 5px;
+    width: fit-content;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    background: whitesmoke;
+    cursor: pointer;
+}
+
+#properties-panel div #prop-bg{
+    padding: 0;
+    height: 40px;
+    width: 80%;
+    margin: 5px;
+}
+
+#properties-panel  button {
+    border: none;
+    outline: none;
+    padding: 8px 12px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+    gap: 5px;
+}
+
+#properties-panel  button:hover {
+    background: royalblue;
+    color: #fff;
+    cursor: pointer;
 }

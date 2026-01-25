@@ -16,6 +16,11 @@ let startWidth = 0;
 let startHeight = 0;
 let startLeft = 0;
 let startTop = 0;
+let propWidth = document.getElementById('prop-width');
+let propHeight = document.getElementById('prop-height');
+let propBg = document.getElementById('prop-bg');
+let propText = document.getElementById('prop-text');
+
 
 
 // prevent default right click menu on whole document
