@@ -292,3 +292,94 @@ body {
 #bottom-right {
     cursor: se-resize;
 }
+
+/* layers panel */
+#layers-panel {
+    height: 50vh;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    justify-content: space-between;
+    top: 10%;
+    right: 0;
+    background: #fff;
+    margin: 10px;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
+    width: 15.5%;
+    cursor: pointer;
+}
+
+#layers-panel #buttons {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    gap: 8px;
+    padding: 5px;
+}
+
+#layers-panel #buttons button {
+    border: none;
+    outline: none;
+    padding: 8px 12px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+    gap: 5px;
+}
+
+#layers-panel #buttons button:hover {
+    background: royalblue;
+    color: #fff;
+    cursor: pointer;
+}
+
+#layers {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    text-align: justify;
+    gap: 8px;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    overflow: auto;
+    flex-wrap: nowrap;
+
+}
+
+.layer-div {
+    padding: 8px 12px;
+    font-size: 15px;
+    background-color: whitesmoke;
+    border-radius: 10px;
+    width: 100%;
+    height: fit-content;
+    color: #000;
+    border: 1px solid black;
+}
+
+.layer-div:hover {
+    cursor: pointer;
+    background: royalblue;
+    color: #fff;
+}
+
+.layer-div:active {
+    cursor: pointer;
+    background: royalblue;
+    color: #fff;
+}
+
+.active-layer{
+    background: royalblue;
+    border: 1px solid #fff;
+    color: #fff;
+}

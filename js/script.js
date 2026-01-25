@@ -7,6 +7,7 @@ let pencilTool = document.getElementById("pencil-tool");
 let rotationTool = document.getElementById("rotate-btn");
 let saveBtn = document.getElementById("save-btn");
 let deleteBtn = document.getElementById("delete-btn");
+let layers = document.getElementById("layers");
 let isResizing = false;
 let resizeDirection = null; // "tl", "tr", "bl", "br"
 let resizeStartX = 0;
@@ -285,6 +286,8 @@ workSpace.addEventListener('mouseup', (e) => {
     rectangle = null;
     updateCursor();
     setActiveTool(selectTool);
+    layersManger(); // manage layers
+    syncLayer(); // update layer selection
 });
 
 // handle element selection
@@ -316,6 +319,7 @@ workSpace.addEventListener('click', (e) => {
     selectElement = e.target;
     selectElement.classList.add('selected');
     addResizeHandlers();
+    syncLayer();
 });
 
 // delete selected element using keyboard
@@ -332,6 +336,7 @@ document.addEventListener('keydown', (e) => {
             setActiveTool(selectTool);
             rectangle = null;
             saveToLocalStorage();
+            layersManger();
         }
     }
 });
@@ -473,6 +478,7 @@ function loadFromLocalStorage() {
         }
         workSpace.appendChild(eli);
     });
+    layersManger();
 }
 loadFromLocalStorage();
 
@@ -487,6 +493,7 @@ deleteBtn.addEventListener('click', () => {
     localStorage.removeItem("editorData");
     selectElement = null;
     setActiveTool(selectTool);
+    layersManger();
 });
 
 // update cursor based on active tool
@@ -549,4 +556,65 @@ function addResizeHandlers() {
     selectElement.appendChild(bottomRight);
 }
 
+// layers: generate layers according to the canvas
+function layersManger() {
+    // remove all the layers which was present earlier
+    layers.innerHTML = '';
+    let elements = [...workSpace.children];
+    elements.forEach((el) => {
+        let div = document.createElement('div');
+        div.classList.add('layer-div');
+        div.textContent = el.id;
+        // store direct reference to canvas element
+        div.elementRef = el;
+        layers.prepend(div);
+        // selection logic, manage element from layers panel
+        div.addEventListener('click', () => {
+            if (selectElement) {
+                selectElement.classList.remove('selected');
+                selectElement.querySelectorAll('.handler').forEach(h => h.remove());
+            }
+            selectElement = div.elementRef;
+            selectElement.classList.add('selected');
+            addResizeHandlers();
+            syncLayer();
+        });
+        console.log(div.elementRef === el); // should be true
+    });
+}
 
+// backward or farword buttons: manage layers
+let backward = document.getElementById('backward');
+let forward = document.getElementById('forward');
+// move element backward
+backward.addEventListener('click', (el) => {
+    if (!selectElement) return;
+    elements = [...workSpace.children];
+    const previousElement = selectElement.previousElementSibling;
+    if (previousElement) {
+        workSpace.insertBefore(selectElement, previousElement);
+        layersManger();
+    }
+});
+// move element forward
+forward.addEventListener('click', () => {
+    if (!selectElement) return;
+    const nextElement = selectElement.nextElementSibling;
+    if (nextElement) {
+        workSpace.insertBefore(nextElement, selectElement);
+        layersManger();
+    }
+});
+
+// sync layer with selection
+function syncLayer() {
+    let layers = document.querySelectorAll('.layer-div');
+    layers.forEach((el) => {
+        if (selectElement) {
+            el.classList.remove('active-layer');
+        }
+        if (selectElement === el.elementRef) {
+            el.classList.add('active-layer');
+        }
+    });
+}
