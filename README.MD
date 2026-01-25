@@ -1,172 +1,173 @@
-# Dom Based Editor
+# 🎨 Dom Based Editor
 
-![project preview](./assets/project-preview.png)
+![project preview](./assets/project-preview-updated.png)
 
-**dom based editor** is a browser-based design editor inspired by figma-like workflows.  
-it is built **from scratch using only html, css, and vanilla javascript (dom)** as required in the **inter batch showdown** by sheryians coding school.
+**Dom Based Editor** is a browser-based design editor inspired by figma-like workflows ✨  
+It is built **from scratch using only HTML, CSS, and Vanilla JavaScript (DOM)** as required in the **Inter Batch Showdown** by **Sheryians Coding School** 🏫.
 
-the purpose of this project is to demonstrate **strong frontend fundamentals**, including:
-- dom manipulation  
-- state management  
-- keyboard & mouse interactions  
-- event-driven ui logic  
+The goal of this project is to demonstrate **strong frontend fundamentals** 💪, including:
+- 🧠 DOM manipulation  
+- 🔁 state management  
+- 🖱️ keyboard & mouse interactions  
+- ⚡ event-driven UI logic  
 
-all without using any framework or external library.
-
----
-
-## Competition Alignment
-
-**project type:** frontend web project  
-**tech stack:** html, css, javascript (dom only)  
-**frameworks / libraries:** ❌ none used  
-**ai usage:** ✅ only for guidance, debugging, and logic clarification  
-
-this project strictly follows all competition rules:
-- no frameworks or libraries used  
-- all logic written manually  
-- clear understanding of every implemented feature  
-- no copied or generated code  
-- original ui/ux decisions  
-- no commits will be made after submission until results are declared  
+🚫 No frameworks. 🚫 No libraries.  
+Everything is handcrafted.
 
 ---
 
-## Features Implemented
+## 🏁 Competition Alignment
 
-### Shape Creation Tools
-- rectangle tool  
-- circle tool (rectangle logic with border-radius)
+- **Project Type:** Frontend Web Project  
+- **Tech Stack:** HTML, CSS, JavaScript (DOM only)  
+- **Frameworks / Libraries:** ❌ None  
+- **AI Usage:** ✅ Only for guidance, debugging, and logic clarification  
 
-**how to use**
-1. select rectangle or circle tool from the left toolbar  
-2. click and drag inside the workspace to draw the shape  
-
----
-
-### Text Tool
-- create editable text boxes  
-- auto-focus after creation  
-- real-time text saving  
-
-**how to use**
-1. select the text tool  
-2. click anywhere on the canvas  
-3. start typing immediately  
-4. click outside the text box to finish editing  
+This project strictly follows all competition rules:
+- ❌ No frameworks or libraries  
+- ✍️ All logic written manually  
+- 🧩 Clear understanding of each feature  
+- 🚫 No copied or auto-generated code  
+- 🎨 Original UI/UX decisions  
+- 🔒 Repository frozen after submission  
 
 ---
 
-### Select And Move Elements
-- click to select an element  
-- drag to move it freely  
-- selected element is visually highlighted  
+## 🚀 Features Implemented
 
-**how to use**
-1. select the cursor/select tool  
-2. click on any element  
-3. drag it to reposition  
+### 🟦 Shape Creation Tools
+- Rectangle tool  
+- Circle tool (rectangle logic with `border-radius`)
 
----
-
-### Delete Element
-- delete selected element using:
-  - `delete` key  
-  - `backspace` key  
-- delete is disabled while editing text to prevent data loss  
-
-**how to use**
-1. select an element  
-2. press `delete` or `backspace`  
+**How to use**
+1. Select rectangle or circle tool from the left toolbar  
+2. Click and drag inside the workspace  
 
 ---
 
-### Rotation Tool
-- rotate selected element by **15° per click**  
-- rotation state is preserved and restored  
+### ✏️ Text Tool
+- Editable text boxes  
+- Auto-focus after creation  
+- Real-time text persistence  
 
-**how to use**
-1. select an element  
-2. click the rotate icon in the toolbar  
-
----
-
-### Keyboard Movement
-- move selected element using arrow keys  
-- smooth movement in 5px steps  
-
-**controls**
-- ↑ move up  
-- ↓ move down  
-- ← move left  
-- → move right  
+**How to use**
+1. Select the text tool  
+2. Click anywhere on the canvas  
+3. Start typing immediately  
+4. Click outside to finish editing  
 
 ---
 
-### Export Features
-
-#### Export As Json
-- exports complete editor data  
-- includes position, size, rotation, and text content  
-
-#### Export As Html
-- generates a standalone static html file  
-- can be opened directly in a browser  
-
-**how to use**
-- click `export json` or `export html` from the top-right menu  
+### 🖱️ Select & Move Elements
+- Click to select an element  
+- Drag to move freely  
+- Selected element is visually highlighted  
 
 ---
 
-### Local Storage Persistence
-- editor auto-saves state to `localStorage`  
-- design restores automatically on page reload  
-- manual save button also provided  
-
-**how to use**
-- work is saved automatically  
-- click the save icon to force-save manually  
+### 🔲 Resize Elements
+- Resize using **four corner handles**  
+- Width and height update dynamically  
+- Real-time resize with mouse movement  
 
 ---
 
-### Cursor And Tool Feedback
-- cursor updates based on active tool  
-- active tool icon highlights automatically  
-- improves usability and reduces confusion  
+### 🗑️ Delete Element
+- Delete selected element using:
+  - `Delete` key  
+  - `Backspace` key  
+- Disabled while editing text to prevent accidental deletion  
 
 ---
 
-### Share Feature
-- copies current project url to clipboard  
-
-**how to use**
-- click the `share` button  
+### 🔄 Rotation Tool
+- Rotate selected element by **15° per click**  
+- Rotation state is preserved and restored  
 
 ---
 
-## How To Test The Project
-
-1. open `index.html` in any modern browser  
-2. create rectangles, circles, and text boxes  
-3. select and move elements using mouse  
-4. rotate elements using rotate tool  
-5. delete elements using keyboard  
-6. reload page to verify auto-restore  
-7. export json and html files and open them  
-8. test keyboard controls (arrow keys + delete)  
+### ⌨️ Keyboard Movement
+- Move selected element using arrow keys  
+- Smooth movement in **5px steps**
 
 ---
 
-## Ai Usage Disclosure
-
-ai (chatgpt) was used **only for guidance, debugging assistance, and conceptual clarification**.  
-all code, structure, and implementation decisions were written and finalized manually.
+### 🧱 Layers Panel
+- Displays all elements on the canvas  
+- Each layer represents one element  
+- Clicking a layer selects the element on canvas  
+- Supports:
+  - ⬇️ Send backward  
+  - ⬆️ Bring forward  
+- Layer order is synced with canvas stacking  
 
 ---
 
-## Submission Notice
+### 🧩 Properties Panel (UI Ready)
+- Dedicated properties panel UI  
+- Controls available for:
+  - 📐 Width  
+  - 📏 Height  
+  - 🎨 Background color  
+  - 📝 Text content (text elements only)
 
-this repository is **frozen for submission**.  
-no further commits will be made until competition results are announced.
+> ℹ️ UI is fully implemented.  
+> Live binding logic can be extended further if required.
 
-for detailed progress and changes, please refer to the git commit history.
+---
+
+### 📤 Export Features
+
+#### 📄 Export as JSON
+- Exports complete editor data  
+- Includes position, size, rotation, and text content  
+
+#### 🌐 Export as HTML
+- Generates a standalone static HTML file  
+- Can be opened directly in a browser  
+
+---
+
+### 💾 Local Storage Persistence
+- Auto-saves editor state to `localStorage`  
+- Restores design automatically on reload  
+- Manual save button also provided  
+
+---
+
+### 🎯 Cursor & Tool Feedback
+- Cursor updates based on active tool  
+- Active tool icon highlights automatically  
+
+---
+
+### 🔗 Share Feature
+- Copies current project URL to clipboard  
+
+---
+
+## 🧪 How to Test the Project
+
+1. Open `index.html` in any modern browser 🌍  
+2. Create rectangles, circles, and text boxes  
+3. Select, move, resize, and rotate elements  
+4. Test keyboard movement and delete keys  
+5. Reload page to verify persistence  
+6. Test layers panel ordering and selection  
+7. Export JSON and HTML files  
+
+---
+
+## 🤖 AI Usage Disclosure
+
+AI (ChatGPT) was used **only for guidance, debugging help, and conceptual clarification**.  
+All code, logic, structure, and final decisions were implemented manually ✍️.
+
+---
+
+## 🔒 Submission Notice
+
+This repository is **frozen for submission** 🧊.  
+No further commits will be made until competition results are announced.
+
+📜 For detailed progress, please refer to the Git commit history.
