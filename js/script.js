@@ -449,6 +449,7 @@ function saveToLocalStorage() {
             left: el.style.left,
             rotation: el.getAttribute('rotation'),
             text: el.classList.contains("text-box") ? el.textContent : "",
+            id: el.id,
         };
     });
 
@@ -471,7 +472,7 @@ function loadFromLocalStorage() {
         eli.setAttribute("rotation", el.rotation);
         eli.style.transform = `rotate(${el.rotation}deg)`;
         eli.style.border = "4px solid black";
-
+        eli.id = el.id;
         if (el.elementType === "text-box") {
             eli.contentEditable = true;
             eli.textContent = el.text;
